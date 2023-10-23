@@ -6,7 +6,9 @@ export default function Home() {
       <div className="w-full h-full inset-0 absolute z-[-50]">
         <BoidCanvas />
       </div>
-      <div className="bg-white w-[50px] h-[50px]"></div>
+      <div className="bg-white w-[50px] h-[50px]">
+        <p className="text-black"> text ui</p>
+      </div>
     </main>
   );
 }
