@@ -2,7 +2,7 @@
 
 import { OrthographicCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import TestBox from './TestBox';
+import Boids from '@/components/Boids';
 
 export default function BoidCanvas() {
   return (
@@ -20,7 +20,7 @@ export default function BoidCanvas() {
         // far={2000}
         position={[0, 0, 1000]}
       />
-      <TestBox position={[-25, 0, 0]} color="blue" />
+      <Boids />
     </Canvas>
   );
 }

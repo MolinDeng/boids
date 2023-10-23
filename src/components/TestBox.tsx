@@ -47,7 +47,7 @@ const TestBox: FC<TestBoxProps> = ({ color, ...prop }) => {
   const [clicked, click] = useState<boolean>(false);
 
   // Subscribe this component to the render-loop and rotate the mesh every frame.
-  //   useFrame((state, delta) => (meshRef.current.rotation.x += delta));
+  useFrame((state, delta) => (meshRef.current.rotation.x += delta));
 
   // Return the view.
   // These are regular three.js elements expressed in JSX.

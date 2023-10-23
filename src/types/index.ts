@@ -1,4 +1,4 @@
-enum BirdStatus {
+export enum BirdStatus {
   Landed,
   Flying,
   // Alive,
