@@ -41,7 +41,8 @@ export class Bird implements IBird {
     this.maxEnergy = 0; // TODO
     this.status = BirdStatus.Flying; // TODO
 
-    this.basicRules = [new Alignment(), new Cohesion(), new Separation()];
+    // this.basicRules = [new Alignment(), new Cohesion(), new Separation()];
+    this.basicRules = [];
   }
 
   update(delta: number, boids: IBird[], size: Size) {
@@ -79,16 +80,10 @@ export class Bird implements IBird {
   */
   // boundless world
   checkBoundaries(size: Size) {
-    if (this.pos.x > size.width / 2) {
-      this.pos.x -= size.width;
-    } else if (this.pos.x < -size.width / 2) {
-      this.pos.x += size.width;
-    }
-    if (this.pos.y > size.height / 2) {
-      this.pos.y -= size.height;
-    } else if (this.pos.y < -size.height / 2) {
-      this.pos.y += size.height;
-    }
+    if (this.pos.x > size.width) this.pos.x = 0;
+    else if (this.pos.x < 0) this.pos.x = size.width;
+    if (this.pos.y > size.height) this.pos.y = 0;
+    else if (this.pos.y < 0) this.pos.y = size.height;
   }
   getNeighbors(boids: IBird[]): IBird[] {
     const neighbors: IBird[] = [];
@@ -101,7 +96,6 @@ export class Bird implements IBird {
         }
       }
     }
-    console.log(neighbors.length);
     return neighbors;
   }
 }

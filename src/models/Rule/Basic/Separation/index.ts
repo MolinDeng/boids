@@ -23,7 +23,7 @@ export default class Separation extends Rule implements ISeparation {
       .normalize()
       .multiplyScalar(BIRD_MAX_SPEED) // TODO adjust speed through UI
       .sub(bird.vel)
-      .multiplyScalar(1); // TODO adjust weight through UI
+      .multiplyScalar(0.1); // TODO adjust weight through UI
 
     bird.acc.add(this.value);
     // reset vector
