@@ -4,7 +4,6 @@ import { MeshProps, useFrame, useThree } from '@react-three/fiber';
 import React, { useRef } from 'react';
 import { Mesh } from 'three';
 
-// TODO adjust mesh rotation to match velocity
 interface BirdRendererProps extends MeshProps {
   bird: IBird;
   boids: IBird[];
@@ -27,7 +26,7 @@ export default function BirdRenderer({
   return (
     <>
       <mesh {...prop} ref={meshRef}>
-        <coneGeometry args={[6, 20]} />
+        <coneGeometry args={[3, 10]} />
         {/* <meshStandardMaterial color="red" /> */}
       </mesh>
     </>

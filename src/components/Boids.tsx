@@ -8,7 +8,7 @@ export default function Boids({ w, h }: { w: number; h: number }) {
   // create boids
   const boids = useMemo(() => {
     const boids: IBird[] = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 100; i++) {
       const pos = new Vector3(
         MathUtils.randFloat(0, w),
         MathUtils.randFloat(0, h),
@@ -17,13 +17,15 @@ export default function Boids({ w, h }: { w: number; h: number }) {
       const randomAngle = MathUtils.randFloat(0, Math.PI * 2);
       const vel = new Vector3(Math.cos(randomAngle), Math.sin(randomAngle), 0)
         .normalize()
-        .multiplyScalar(BIRD_MAX_SPEED / 2); // pixels per second
+        .multiplyScalar(BIRD_MAX_SPEED); // pixels per second
       boids.push(new Bird(pos, vel));
     }
     return boids;
   }, []);
 
-  const mat = useMemo(() => new MeshStandardMaterial({ color: 'red' }), []);
+  // const meshes = useRef<Mesh[]>(new Array(100).fill(null!));
+
+  const mat = useMemo(() => new MeshStandardMaterial({ color: 'white' }), []);
   return (
     <>
       {boids.map((bird, i) => (
