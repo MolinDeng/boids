@@ -29,7 +29,7 @@ export default function BirdRenderer({
   return (
     <>
       <mesh {...prop} ref={meshRef}>
-        <coneGeometry args={[3, 10]} />
+        <coneGeometry args={[3, 10]} attach="geometry" />
         {/* <meshStandardMaterial color="red" /> */}
       </mesh>
     </>
