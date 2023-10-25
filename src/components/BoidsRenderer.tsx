@@ -4,7 +4,7 @@ import { MathUtils, MeshStandardMaterial, Vector3 } from 'three';
 import { Bird, IBird } from '@/models/Bird';
 import { BIRD_MAX_SPEED, BIRD_NUM } from '@/lib/constants';
 
-export default function Boids({ w, h }: { w: number; h: number }) {
+export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
   // create boids
   const boids = useMemo(() => {
     const boids: IBird[] = [];

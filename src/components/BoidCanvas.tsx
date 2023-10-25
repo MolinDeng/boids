@@ -2,7 +2,7 @@
 
 import { OrthographicCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import Boids from '@/components/Boids';
+import Boids from '@/components/BoidsRenderer';
 import useWindowSize from '@/hooks/useWindowSize';
 
 export default function BoidCanvas() {

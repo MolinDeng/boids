@@ -1,3 +1,4 @@
+import { useRenderPause } from '@/hooks/useBoidsConfig';
 import { getAngleFromVector } from '@/lib/utils';
 import { IBird } from '@/models/Bird';
 import { MeshProps, useFrame, useThree } from '@react-three/fiber';
@@ -18,9 +19,11 @@ export default function BirdRenderer({
   const { size } = useThree();
 
   useFrame((state, delta) => {
-    bird.update(delta, boids, size);
-    meshRef.current.position.copy(bird.pos);
-    meshRef.current.rotation.z = getAngleFromVector(bird.vel) - Math.PI / 2;
+    if (!useRenderPause.getState().paused) {
+      bird.update(delta, boids, size);
+      meshRef.current.position.copy(bird.pos);
+      meshRef.current.rotation.z = getAngleFromVector(bird.vel) - Math.PI / 2;
+    }
   });
 
   return (
