@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import BirdRenderer from './BirdRenderer';
-import { MathUtils, MeshStandardMaterial, Vector3 } from 'three';
+import BirdRenderer from '@/deprecated/BirdRenderer';
+import { MathUtils, MeshStandardMaterial } from 'three';
 import { Bird, IBird } from '@/models/Bird';
 import { BIRD_MAX_SPEED, BIRD_NUM } from '@/lib/constants';
 
