@@ -54,9 +54,10 @@ export class Bird implements IBird {
     const neighbors = this.getNeighbors(boids);
     // apply rules
     this.applyRules(neighbors);
+
     // update velocity
     this.vel.add(this.acc.multiplyScalar(delta));
-    // add noise to velocity
+    // add noise to direction
     this.vel.applyAxisAngle(
       Bird.axisZ,
       MathUtils.degToRad(MathUtils.randFloat(-10, 10)) * 0.5 // TODO adjust noise through UI

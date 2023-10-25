@@ -8,7 +8,7 @@ export default function Boids({ w, h }: { w: number; h: number }) {
   // create boids
   const boids = useMemo(() => {
     const boids: IBird[] = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       const pos = new Vector3(
         MathUtils.randFloat(0, w),
         MathUtils.randFloat(0, h),

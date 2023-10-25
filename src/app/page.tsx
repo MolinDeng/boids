@@ -1,13 +1,12 @@
 import BoidCanvas from '@/components/BoidCanvas';
+import ToolMenu from '@/components/ToolMenu';
 
 export default function Home() {
   return (
-    <main className="w-full h-full">
+    <main className="min-h-screen">
+      <ToolMenu />
       <div className="w-full h-full inset-0 absolute z-[-50]">
         <BoidCanvas />
-      </div>
-      <div className="bg-white w-[50px] h-[50px]">
-        <p className="text-black"> text ui</p>
       </div>
     </main>
   );
