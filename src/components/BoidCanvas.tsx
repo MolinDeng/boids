@@ -2,8 +2,8 @@
 
 import { OrthographicCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import Boids from '@/components/BoidsRenderer';
 import useWindowSize from '@/hooks/useWindowSize';
+import BoidsRenderer from '@/components/BoidsRenderer';
 
 export default function BoidCanvas() {
   const { width, height } = useWindowSize();
@@ -23,7 +23,7 @@ export default function BoidCanvas() {
         // far={2000}
         position={[0, 0, 1000]}
       />
-      <Boids w={width!} h={height!} />
+      <BoidsRenderer w={width!} h={height!} />
     </Canvas>
   );
 }

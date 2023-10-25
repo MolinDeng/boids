@@ -34,9 +34,9 @@ export class Bird implements IBird {
 
   static axisZ: Vector3 = new Vector3(0, 0, 1);
 
-  constructor(pos: Vector3, vel: Vector3) {
-    this.pos = pos;
-    this.vel = vel;
+  constructor() {
+    this.pos = new Vector3(0, 0, 0);
+    this.vel = new Vector3(0, 0, 0);
     this.acc = new Vector3(0, 0, 0);
 
     this.energy = 0; // TODO

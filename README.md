@@ -1,4 +1,26 @@
 
+<br />
+<div align="center">
+  <!-- <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a> -->
+
+  <h3 align="center">Boids Simulation</h3>
+
+  <p align="center">
+    Georgia Tech CSE 6730 Modeling and Simulation Project
+    <!-- <br />
+    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    ·
+    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a> -->
+  </p>
+</div>
+
 ## About The Project
 
 ### Built With
@@ -52,7 +74,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   * [ ] Predator/Prey Model
 
 * Rendering part
-  * [ ] Use InstancedMesh to render boids
+  * [x] Use InstancedMesh to render boids (reduce draw calls)
+
+* More interative
+  * [ ] Mouse click concentration
 
 ## License
 
@@ -76,6 +101,11 @@ Use this space to list resources you find helpful and would like to give credit 
 * [GitHub Pages](https://pages.github.com)
 * [Font Awesome](https://fontawesome.com)
 * [React Icons](https://react-icons.github.io/react-icons/search)
+
+## Useful Links
+
+* <https://github.com/pmndrs/react-three-fiber/discussions/857>
+* <https://codesandbox.io/s/r3f-floating-diamonds-prb9t?file=/src/App.js:1796-1804> InstancedMesh example
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
