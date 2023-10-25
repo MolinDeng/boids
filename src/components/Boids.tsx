@@ -2,13 +2,13 @@ import React, { useMemo } from 'react';
 import BirdRenderer from './BirdRenderer';
 import { MathUtils, MeshStandardMaterial, Vector3 } from 'three';
 import { Bird, IBird } from '@/models/Bird';
-import { BIRD_MAX_SPEED } from '@/lib/constants';
+import { BIRD_MAX_SPEED, BIRD_NUM } from '@/lib/constants';
 
 export default function Boids({ w, h }: { w: number; h: number }) {
   // create boids
   const boids = useMemo(() => {
     const boids: IBird[] = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < BIRD_NUM; i++) {
       const pos = new Vector3(
         MathUtils.randFloat(0, w),
         MathUtils.randFloat(0, h),
