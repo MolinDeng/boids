@@ -23,6 +23,8 @@
 
 ## About The Project
 
+![Project Image](https://github.com/MolinDeng/boids/blob/main/public/demo.gif)
+
 ### Built With
 
 * [![Next][Next.js]][Next-url]
