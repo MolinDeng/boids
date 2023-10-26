@@ -15,6 +15,7 @@ export default class Alignment extends Rule implements ICohesion {
     neighbors.forEach((neighbor) => this.value.add(neighbor.pos));
     this.value
       .divideScalar(neighbors.length)
+      .sub(bird.pos)
       .normalize()
       .multiplyScalar(BIRD_MAX_SPEED) // TODO adjust speed through UI
       .sub(bird.vel)
