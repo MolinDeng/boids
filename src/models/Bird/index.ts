@@ -1,9 +1,8 @@
-import { BIRD_MAX_SPEED, BIRD_PERCEIVED_FLOCK_RADIUS } from '@/lib/constants';
 import { IRule } from '@/models/Rule';
 import Alignment from '@/models/Rule/Basic/Alignment';
 import Cohesion from '@/models/Rule/Basic/Cohesion';
 import Separation from '@/models/Rule/Basic/Separation';
-import { BirdStatus } from '@/types';
+import { BirdConfig, BirdStatus } from '@/types';
 import { Size } from '@react-three/fiber';
 import { MathUtils, Vector3 } from 'three';
 
@@ -17,7 +16,7 @@ export interface IBird {
 
   status: BirdStatus;
 
-  update(delta: number, boids: IBird[], size: Size): void;
+  update(delta: number, boids: IBird[], size: Size, config: BirdConfig): void;
 }
 
 export class Bird implements IBird {
@@ -46,25 +45,25 @@ export class Bird implements IBird {
     this.basicRules = [new Alignment(), new Cohesion(), new Separation()];
   }
 
-  update(delta: number, boids: IBird[], size: Size) {
+  update(delta: number, boids: IBird[], size: Size, config: BirdConfig) {
     // reset acceleration
     this.acc.set(0, 0, 0);
 
     // find neighbors
-    const neighbors = this.getNeighbors(boids);
+    const neighbors = this.getNeighbors(boids, config.birdPerceivedRadius);
     // apply rules
-    this.applyRules(neighbors);
+    this.applyRules(neighbors, config);
 
     // update velocity
     this.vel.add(this.acc.multiplyScalar(delta));
     // add noise to direction
-    this.vel.applyAxisAngle(
-      Bird.axisZ,
-      MathUtils.degToRad(MathUtils.randFloat(-10, 10)) * 0.5 // TODO adjust noise through UI
+    this.applyDireactionNoise(
+      config.birdDirectionNoise,
+      config.birdDirectionNoiseWeight
     );
 
     // limit speed
-    this.limitSpeed(BIRD_MAX_SPEED);
+    this.limitSpeed(config.birdMaxSpeed);
     // update position
     this.pos.set(
       this.pos.x + this.vel.x * delta,
@@ -75,18 +74,30 @@ export class Bird implements IBird {
     this.checkBoundaries(size);
   }
 
-  applyRules(neighbors: IBird[]) {
-    this.basicRules.forEach((rule) => rule.apply(this, neighbors));
+  applyRules(neighbors: IBird[], config: BirdConfig) {
+    this.basicRules.forEach((rule) => rule.apply(this, neighbors, config));
   }
 
-  limitSpeed(maxSpeed: number) {
-    if (this.vel.length() > maxSpeed) {
-      this.vel.normalize().multiplyScalar(maxSpeed);
+  limitSpeed(birdMaxSpeed: number) {
+    if (this.vel.length() > birdMaxSpeed) {
+      this.vel.normalize().multiplyScalar(birdMaxSpeed);
     }
   }
-  /*
-  ==================== Utils ====================
-  */
+
+  applyDireactionNoise(
+    birdDirectionNoise: number,
+    birdDirectionNoiseWeight: number
+  ) {
+    if (birdDirectionNoise === 0 || birdDirectionNoiseWeight === 0) return;
+
+    this.vel.applyAxisAngle(
+      Bird.axisZ,
+      MathUtils.degToRad(
+        MathUtils.randFloat(-birdDirectionNoise, birdDirectionNoise)
+      ) * birdDirectionNoiseWeight
+    );
+  }
+
   // boundless world
   checkBoundaries(size: Size) {
     if (this.pos.x > size.width) this.pos.x = 0;
@@ -95,13 +106,13 @@ export class Bird implements IBird {
     else if (this.pos.y < 0) this.pos.y = size.height;
   }
 
-  getNeighbors(boids: IBird[]): IBird[] {
+  getNeighbors(boids: IBird[], birdPerceivedRadius: number): IBird[] {
     const neighbors: IBird[] = [];
     for (const bird of boids) {
       if (bird !== this) {
         const distance = this.pos.distanceTo(bird.pos);
 
-        if (distance < BIRD_PERCEIVED_FLOCK_RADIUS) {
+        if (distance < birdPerceivedRadius) {
           neighbors.push(bird);
         }
       }

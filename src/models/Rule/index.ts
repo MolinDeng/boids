@@ -1,10 +1,11 @@
 import { IBird } from '@/models/Bird';
+import { BirdConfig } from '@/types';
 import { Vector3 } from 'three';
 
 export interface IRule {
   // bird is the bird to apply the rule to
   // neighbors are the birds that are within the radius of the bird
-  apply: (bird: IBird, neighbors: IBird[]) => void;
+  apply: (bird: IBird, neighbors: IBird[], config: BirdConfig) => void;
   reset: () => void;
 }
 
@@ -18,5 +19,5 @@ export abstract class Rule implements IRule {
   reset() {
     this.value.set(0, 0, 0);
   }
-  abstract apply(bird: IBird, neighbors: IBird[]): void;
+  abstract apply(bird: IBird, neighbors: IBird[], config: BirdConfig): void;
 }
