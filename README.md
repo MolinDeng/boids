@@ -12,9 +12,10 @@
     <br />
     <!-- <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a> -->
     <br />
+    <a href="https://boids-gt.vercel.app/">Live Demo</a>
     ·
-    <a href="https://boids-gt.vercel.app/">View Demo</a>
-    ·
+    <a href="https://typst.app/project/pQGulnvQ67gPfl_Vuzblmx">View Report</a>
+
   </p>
 </div>
 
