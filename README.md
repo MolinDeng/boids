@@ -8,7 +8,7 @@
   <h3 align="center">Boids Simulation</h3>
 
   <p align="center">
-    Georgia Tech CSE 6730 Modeling and Simulation Project
+    Georgia Tech CSE 6730 Fall-2023 Modeling and Simulation Project
     <!-- <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
@@ -23,7 +23,7 @@
 
 ## About The Project
 
-![Project Image](https://github.com/MolinDeng/boids/blob/main/public/demo.gif)
+![Project Image](https://boids-gt.vercel.app/demo.gif)
 
 ### Built With
 
