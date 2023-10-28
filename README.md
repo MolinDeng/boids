@@ -14,7 +14,7 @@
     <br />
     <a href="https://boids-gt.vercel.app/">Live Demo</a>
     ·
-    <a href="https://typst.app/project/pQGulnvQ67gPfl_Vuzblmx">View Report</a>
+    <a href="https://typst.app/project/raPr6DOusWCrubeP9PTGQg">View Report</a>
 
   </p>
 </div>
