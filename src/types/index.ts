@@ -7,8 +7,10 @@ export enum BirdStatus {
 
 export interface PauseState {
   paused: boolean;
+  nextFrame: boolean;
   setPaused: (p: boolean) => void;
   flipPaused: () => void;
+  setNextFrame: (n: boolean) => void;
 }
 
 export interface BirdConfig {

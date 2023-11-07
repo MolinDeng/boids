@@ -3,8 +3,10 @@ import { create } from 'zustand';
 
 export const useRenderPause = create<PauseState>()((set) => ({
   paused: false,
+  nextFrame: false,
   setPaused: (p) => set(() => ({ paused: p })),
   flipPaused: () => set((state) => ({ paused: !state.paused })),
+  setNextFrame: (p) => set(() => ({ nextFrame: p })),
 }));
 
 export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({

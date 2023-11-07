@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 
 export default function ToolMenu() {
-  const { paused, flipPaused, setPaused } = useRenderPause();
+  const { paused, flipPaused, setPaused, setNextFrame } = useRenderPause();
   const {
     birdNum,
     birdPerceivedRadius,
@@ -137,7 +137,13 @@ export default function ToolMenu() {
             Pause
           </label>
           {paused && (
-            <Button variant={'outline'} size={'sm'}>
+            <Button
+              variant={'outline'}
+              size={'sm'}
+              onClick={(e) => {
+                setNextFrame(true);
+              }}
+            >
               Next Frame
             </Button>
           )}
