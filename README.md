@@ -21,7 +21,9 @@
 
 ## About The Project
 
-![Project Image](https://boids-gt.vercel.app/demo.gif)
+<p align="center">
+  <img src="https://boids-gt.vercel.app/demo.gif" alt="demo" width="500" height="auto">
+</p>
 
 ### Built With
 
