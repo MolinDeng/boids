@@ -129,7 +129,7 @@ export default function ToolMenu() {
           </Link>
         </p>
         <div className="flex items-center space-x-2">
-          <Button onClick={flipMemoFresh}>
+          <Button onClick={flipMemoFresh} className="text-xs">
             <RefreshCcw className="h-4 w-4" /> Reset
           </Button>
           <Checkbox
@@ -143,6 +143,7 @@ export default function ToolMenu() {
           </label>
           {paused && (
             <Button
+              className="text-xs"
               size={'sm'}
               onClick={(e) => {
                 setNextFrame(true);

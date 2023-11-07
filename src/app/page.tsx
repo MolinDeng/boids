@@ -1,10 +1,10 @@
 import BoidCanvas from '@/components/BoidCanvas';
-import ToolMenu from '@/components/ToolMenu';
+import ControlPanel from '@/components/ControlPanel';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <ToolMenu />
+      <ControlPanel />
       <div className="w-full h-full inset-0 absolute z-[-50]">
         <BoidCanvas />
       </div>
