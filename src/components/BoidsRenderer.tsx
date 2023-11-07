@@ -22,6 +22,7 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
   const { birdNum, birdMaxSpeed } = useBirdConfig();
   // create boids logic objects
   const boids = useMemo(() => {
+    // TODO use Boids class, maybe not necessary
     const boids: IBird[] = [];
     for (let i = 0; i < birdNum; i++) {
       const bird = new Bird();
@@ -45,6 +46,7 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
     ) {
       useRenderPause.getState().setNextFrame(false);
       // update boids
+      // TODO use Boids class, maybe not necessary
       boids.forEach((bird, i) => {
         bird.update(delta, boids, state.viewport, useBirdConfig.getState());
         dummy.position.copy(bird.pos);
