@@ -8,9 +8,11 @@ export enum BirdStatus {
 export interface PauseState {
   paused: boolean;
   nextFrame: boolean;
+  memoRefresh: boolean; // trigger useMemo refresh
   setPaused: (p: boolean) => void;
   flipPaused: () => void;
-  setNextFrame: (n: boolean) => void;
+  setNextFrame: (p: boolean) => void;
+  flipMemoFresh: () => void;
 }
 
 export interface BirdConfig {

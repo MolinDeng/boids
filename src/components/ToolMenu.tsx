@@ -2,12 +2,14 @@
 import Link from 'next/link';
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useBirdConfig, useRenderPause } from '@/hooks/useBoidsConfig';
+import { useBirdConfig, useRenderConfig } from '@/hooks/useBoidsConfig';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
+import { RefreshCcw } from 'lucide-react';
 
 export default function ToolMenu() {
-  const { paused, flipPaused, setPaused, setNextFrame } = useRenderPause();
+  const { paused, flipPaused, setPaused, setNextFrame, flipMemoFresh } =
+    useRenderConfig();
   const {
     birdNum,
     birdPerceivedRadius,
@@ -127,18 +129,20 @@ export default function ToolMenu() {
           </Link>
         </p>
         <div className="flex items-center space-x-2">
+          <Button onClick={flipMemoFresh}>
+            <RefreshCcw className="h-4 w-4" /> Reset
+          </Button>
           <Checkbox
             className="ring-white"
             id="pause"
             checked={paused}
             onClick={flipPaused}
           />
-          <label htmlFor="pause" className="py-4 pr-2">
+          <label htmlFor="pause" className="py-4">
             Pause
           </label>
           {paused && (
             <Button
-              variant={'outline'}
               size={'sm'}
               onClick={(e) => {
                 setNextFrame(true);

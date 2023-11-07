@@ -8,7 +8,7 @@ import {
 } from 'three';
 import { Bird, IBird } from '@/models/Bird';
 import { useFrame } from '@react-three/fiber';
-import { useRenderPause, useBirdConfig } from '@/hooks/useBoidsConfig';
+import { useRenderConfig, useBirdConfig } from '@/hooks/useBoidsConfig';
 import { getAngleFromVector } from '@/lib/utils';
 
 export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
@@ -20,6 +20,7 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
   const dummy = useMemo(() => new Object3D(), []);
 
   const { birdNum, birdMaxSpeed } = useBirdConfig();
+  const { memoRefresh } = useRenderConfig();
   // create boids logic objects
   const boids = useMemo(() => {
     // TODO use Boids class, maybe not necessary
@@ -35,16 +36,16 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
       boids.push(bird);
     }
     return boids;
-  }, [birdNum]); // dependency is only birdNum, whenever birdNum changes, this will be re-run
+  }, [birdNum, memoRefresh]); // dependency is birdNum and memoRefresh
 
   const model = useRef<InstancedMesh>(null!);
 
   useFrame((state, delta) => {
     if (
-      !useRenderPause.getState().paused ||
-      useRenderPause.getState().nextFrame
+      !useRenderConfig.getState().paused ||
+      useRenderConfig.getState().nextFrame
     ) {
-      useRenderPause.getState().setNextFrame(false);
+      useRenderConfig.getState().setNextFrame(false);
       // update boids
       // TODO use Boids class, maybe not necessary
       boids.forEach((bird, i) => {

@@ -93,7 +93,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     * [x] Alignment
     * [x] Cohesion
     * [x] Separation
-  * [ ] Adjust config through UI (doing now)
+  * [x] Adjust config through UI
   * [ ] Additional rules (doing now)
     * [x] Direction noise
     * [ ] Velocity noise
@@ -106,6 +106,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 * More interative
   * [ ] Mouse click concentration
   * [x] Next Frame button
+  * [x] Soft Refresh
 
 ## License
 

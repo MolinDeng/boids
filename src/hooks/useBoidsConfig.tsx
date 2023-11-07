@@ -1,12 +1,14 @@
 import { BirdConfig, BirdConfigActions, PauseState } from '@/types';
 import { create } from 'zustand';
 
-export const useRenderPause = create<PauseState>()((set) => ({
+export const useRenderConfig = create<PauseState>((set) => ({
   paused: false,
   nextFrame: false,
+  memoRefresh: false,
   setPaused: (p) => set(() => ({ paused: p })),
   flipPaused: () => set((state) => ({ paused: !state.paused })),
   setNextFrame: (p) => set(() => ({ nextFrame: p })),
+  flipMemoFresh: () => set((state) => ({ memoRefresh: !state.memoRefresh })),
 }));
 
 export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
