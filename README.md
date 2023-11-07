@@ -31,6 +31,31 @@
 * [![ReactThreeFiber][ReactThreeFiber]][R3F-url]
 * [![ThreeJS][ThreeJS]][ThreeJS-url]
 
+### File Structure
+
+```bash
+.
+├── src
+# Render part
+│   ├── components
+│   │   ├── BoidCanvas.tsx
+│   │   ├── BoidsRenderer.tsx
+# UI part
+│   │   ├── ToolMenu.tsx
+# Logic part
+│   ├── models
+│   │   ├── Bird
+│   │   │   ├── index.ts
+│   │   ├── Rule
+│   │   │   ├── Basic
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── Alignment.ts
+│   │   │   │   ├── Cohesion.ts
+│   │   │   │   ├── Separation.ts
+│   │   │   ├── Extented
+│   │   │   │   ├── TODO
+```
+
 ## Getting Started
 
 First, install dependencies:
@@ -78,6 +103,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 * More interative
   * [ ] Mouse click concentration
+  * [x] Next Frame button
 
 ## License
 
