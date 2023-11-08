@@ -25,16 +25,16 @@ export default class Separation extends Rule implements ISeparation {
       return;
     }
 
-    let d: number = 0;
-    neighbors.forEach((neighbor) => {
-      this.diff.subVectors(bird.pos, neighbor.pos);
-      d = this.diff.length();
-      if (d <= config.birdSeparationRadius) {
-        this.cnt++;
-        this.diff.normalize().divideScalar(d); // weight by distance, closer birds are more repulsive
-        this.value.add(this.diff);
-      }
-    });
+    // let d: number = 0;
+    // neighbors.forEach((neighbor) => {
+    //   this.diff.subVectors(bird.pos, neighbor.pos);
+    //   d = this.diff.length();
+    //   if (d <= config.birdSeparationRadius) {
+    //     this.cnt++;
+    //     this.diff.normalize().divideScalar(d); // weight by distance, closer birds are more repulsive
+    //     this.value.add(this.diff);
+    //   }
+    // });
     if (this.cnt > 0) {
       this.value
         .divideScalar(this.cnt)
@@ -49,21 +49,18 @@ export default class Separation extends Rule implements ISeparation {
     this.reset();
   }
 
-  reset(): void {
-    super.reset();
-    this.cnt = 0;
-    this.diff.set(0, 0, 0);
-  }
-
   accumulate(bird: IBird, neighbor: IBird, config: BirdConfig) {
-    let d: number = 0;
-    let cnt: number = 0;
     this.diff.subVectors(bird.pos, neighbor.pos);
-    d = this.diff.length();
+    const d: number = this.diff.length();
     if (d <= config.birdSeparationRadius) {
-      cnt++;
+      this.cnt++;
       this.diff.normalize().divideScalar(d); // weight by distance, closer birds are more repulsive
       this.value.add(this.diff);
     }
+  }
+
+  reset(): void {
+    super.reset();
+    this.cnt = 0;
   }
 }

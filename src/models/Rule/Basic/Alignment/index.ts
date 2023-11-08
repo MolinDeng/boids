@@ -12,7 +12,7 @@ export default class Alignment extends Rule implements IAlignment {
       return;
     }
 
-    neighbors.forEach((neighbor) => this.value.add(neighbor.vel));
+    // neighbors.forEach((neighbor) => this.value.add(neighbor.vel));
     this.value
       .divideScalar(neighbors.length)
       .normalize()
@@ -29,8 +29,7 @@ export default class Alignment extends Rule implements IAlignment {
     super.reset();
   }
 
-  // TODO: to be used
-  accumulate(neighbor: IBird) {
+  accumulate(bird: IBird, neighbor: IBird, config: BirdConfig) {
     this.value.add(neighbor.vel);
   }
 }

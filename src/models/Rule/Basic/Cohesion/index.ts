@@ -12,7 +12,7 @@ export default class Alignment extends Rule implements ICohesion {
       return;
     }
 
-    neighbors.forEach((neighbor) => this.value.add(neighbor.pos));
+    // neighbors.forEach((neighbor) => this.value.add(neighbor.pos));
     this.value
       .divideScalar(neighbors.length)
       .sub(bird.pos)
@@ -30,8 +30,7 @@ export default class Alignment extends Rule implements ICohesion {
     super.reset();
   }
 
-  // TODO: to be used
-  accumulate(neighbor: IBird) {
+  accumulate(bird: IBird, neighbor: IBird, config: BirdConfig) {
     this.value.add(neighbor.pos);
   }
 }

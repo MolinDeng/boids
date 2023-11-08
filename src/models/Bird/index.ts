@@ -50,7 +50,7 @@ export class Bird implements IBird {
     this.acc.set(0, 0, 0);
 
     // find neighbors
-    const neighbors = this.getNeighbors(boids, config.birdPerceivedRadius);
+    const neighbors = this.getNeighbors(boids, config);
     // apply rules
     this.applyRules(neighbors, config);
 
@@ -106,14 +106,19 @@ export class Bird implements IBird {
     else if (this.pos.y < 0) this.pos.y = size.height;
   }
 
-  getNeighbors(boids: IBird[], birdPerceivedRadius: number): IBird[] {
+  getNeighbors(boids: IBird[], config: BirdConfig): IBird[] {
     const neighbors: IBird[] = [];
+    let distance: number;
     for (const bird of boids) {
       if (bird !== this) {
-        const distance = this.pos.distanceTo(bird.pos);
+        distance = this.pos.distanceTo(bird.pos);
 
-        if (distance < birdPerceivedRadius) {
+        if (distance < config.birdPerceivedRadius) {
           neighbors.push(bird);
+          // accumulate basic rules, for efficiency
+          for (const rule of this.basicRules) {
+            rule.accumulate!(this, bird, config);
+          }
         }
       }
     }
