@@ -25,4 +25,13 @@ export default class Alignment extends Rule implements ICohesion {
     // reset vector
     this.reset();
   }
+
+  reset(): void {
+    super.reset();
+  }
+
+  // TODO: to be used
+  accumulate(neighbor: IBird) {
+    this.value.add(neighbor.pos);
+  }
 }

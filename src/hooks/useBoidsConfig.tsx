@@ -12,7 +12,7 @@ export const useRenderConfig = create<PauseState>((set) => ({
 }));
 
 export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
-  birdNum: 200,
+  birdNum: 500,
   birdPerceivedRadius: 50,
   birdMaxSpeed: 300,
   birdMaxForce: 100,

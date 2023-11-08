@@ -38,7 +38,7 @@ export default function ToolMenu() {
       label: 'Bird Num',
       value: birdNum,
       onValueChange: setBirdNum,
-      max: 1500,
+      max: 5000,
       min: 10,
       step: 10,
     },
