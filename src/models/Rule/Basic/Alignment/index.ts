@@ -20,6 +20,10 @@ export default class Alignment extends Rule implements IAlignment {
       .sub(bird.vel)
       .multiplyScalar(config.birdAlignmentWeight);
 
+    // bound by max force
+    // if (config.birdMaxForce !== 0 && this.value.length() > config.birdMaxForce)
+    // this.value.normalize().multiplyScalar(config.birdMaxForce);
+
     bird.acc.add(this.value);
     // reset vector
     this.reset();

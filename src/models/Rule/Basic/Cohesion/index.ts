@@ -21,6 +21,10 @@ export default class Alignment extends Rule implements ICohesion {
       .sub(bird.vel)
       .multiplyScalar(config.birdCohesionWeight);
 
+    // bound by max force
+    // if (config.birdMaxForce !== 0 && this.value.length() > config.birdMaxForce)
+    //   this.value.normalize().multiplyScalar(config.birdMaxForce);
+
     bird.acc.add(this.value);
     // reset vector
     this.reset();

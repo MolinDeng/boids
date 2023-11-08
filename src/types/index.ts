@@ -19,7 +19,7 @@ export interface BirdConfig {
   birdNum: number;
   birdPerceivedRadius: number;
   birdMaxSpeed: number;
-  birdMaxForce: number;
+  // birdMaxForce: number;
   birdSeparationWeight: number;
   birdAlignmentWeight: number;
   birdCohesionWeight: number;
@@ -32,7 +32,7 @@ export interface BirdConfigActions {
   setBirdNum: (n: number) => void;
   setBirdPerceivedRadius: (n: number) => void;
   setBirdMaxSpeed: (n: number) => void;
-  setBirdMaxForce: (n: number) => void;
+  // setBirdMaxForce: (n: number) => void;
   setBirdSeparationWeight: (n: number) => void;
   setBirdAlignmentWeight: (n: number) => void;
   setBirdCohesionWeight: (n: number) => void;

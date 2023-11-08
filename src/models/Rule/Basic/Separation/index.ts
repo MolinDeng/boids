@@ -43,6 +43,10 @@ export default class Separation extends Rule implements ISeparation {
         .sub(bird.vel)
         .multiplyScalar(config.birdSeparationWeight);
 
+      // bound by max force
+      // if (config.birdMaxForce !== 0 && this.value.length() > config.birdMaxForce)
+      //   this.value.normalize().multiplyScalar(config.birdMaxForce);
+
       bird.acc.add(this.value);
     }
     // reset vector

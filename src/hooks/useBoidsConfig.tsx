@@ -15,7 +15,7 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   birdNum: 500,
   birdPerceivedRadius: 50,
   birdMaxSpeed: 300,
-  birdMaxForce: 100,
+  // birdMaxForce: 100,
   birdSeparationWeight: 1,
   birdAlignmentWeight: 1,
   birdCohesionWeight: 1,
@@ -26,7 +26,7 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   setBirdPerceivedRadius: (n: number) =>
     set(() => ({ birdPerceivedRadius: n })),
   setBirdMaxSpeed: (n: number) => set(() => ({ birdMaxSpeed: n })),
-  setBirdMaxForce: (n: number) => set(() => ({ birdMaxForce: n })),
+  // setBirdMaxForce: (n: number) => set(() => ({ birdMaxForce: n })),
   setBirdSeparationWeight: (n: number) =>
     set(() => ({ birdSeparationWeight: n })),
   setBirdAlignmentWeight: (n: number) =>
