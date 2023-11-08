@@ -5,7 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useBirdConfig, useRenderConfig } from '@/hooks/useBoidsConfig';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { RefreshCcw } from 'lucide-react';
+import { MoveRightIcon, Pause, Play, RefreshCcw } from 'lucide-react';
 
 export default function ToolMenu() {
   const { paused, flipPaused, setPaused, setNextFrame, flipMemoFresh } =
@@ -129,29 +129,24 @@ export default function ToolMenu() {
           </Link>
         </p>
         <div className="flex items-center space-x-2">
-          <Button onClick={flipMemoFresh} className="text-xs">
-            <RefreshCcw className="h-4 w-4" /> Reset
+          <Button onClick={flipMemoFresh} title="Reset">
+            <RefreshCcw className="h-4 w-4" />
           </Button>
-          <Checkbox
-            className="ring-white"
-            id="pause"
-            checked={paused}
-            onClick={flipPaused}
-          />
-          <label htmlFor="pause" className="py-4">
-            Pause
-          </label>
-          {paused && (
-            <Button
-              className="text-xs"
-              size={'sm'}
-              onClick={(e) => {
-                setNextFrame(true);
-              }}
-            >
-              Next Frame
-            </Button>
-          )}
+          <Button onClick={flipPaused} title={paused ? 'Resume' : 'Pause'}>
+            {paused ? (
+              <Play className="h-4 w-4" />
+            ) : (
+              <Pause className="h-4 w-4" />
+            )}
+          </Button>
+          <Button
+            disabled={!paused}
+            onClick={(e) => {
+              setNextFrame(true);
+            }}
+          >
+            Next Frame
+          </Button>
         </div>
         {sliders.map((s) => (
           <div key={s.label}>

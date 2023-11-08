@@ -63,7 +63,7 @@ export class Bird implements IBird {
     );
 
     // limit speed
-    this.limitSpeed(config.birdMaxSpeed);
+    // this.limitSpeed(config.birdMaxSpeed);
     // update position
     this.pos.set(
       this.pos.x + this.vel.x * delta,
