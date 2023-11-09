@@ -14,7 +14,7 @@ export const useRenderConfig = create<PauseState>((set) => ({
 export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   birdNum: 500,
   birdPerceivedRadius: 50,
-  birdMaxSpeed: 300,
+  birdMaxSpeed: 400,
   // birdMaxForce: 100,
   birdSeparationWeight: 1,
   birdAlignmentWeight: 1,
@@ -22,6 +22,9 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   birdSeparationRadius: 40,
   birdDirectionNoise: 10,
   birdDirectionNoiseWeight: 0.1,
+  bounceOffEdge: false,
+  bounceMargin: 200,
+  bounceTurnFactor: 2,
   setBirdNum: (n: number) => set(() => ({ birdNum: n })),
   setBirdPerceivedRadius: (n: number) =>
     set(() => ({ birdPerceivedRadius: n })),
@@ -37,4 +40,8 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   setBirdDirectionNoise: (n: number) => set(() => ({ birdDirectionNoise: n })),
   setBirdDirectionNoiseWeight: (n: number) =>
     set(() => ({ birdDirectionNoiseWeight: n })),
+  flipBounceOffEdge: () =>
+    set((state) => ({ bounceOffEdge: !state.bounceOffEdge })),
+  setBounceMargin: (n: number) => set(() => ({ bounceMargin: n })),
+  setBounceTurnFactor: (n: number) => set(() => ({ bounceTurnFactor: n })),
 }));

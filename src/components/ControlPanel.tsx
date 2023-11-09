@@ -21,6 +21,9 @@ export default function ToolMenu() {
     birdSeparationRadius,
     birdDirectionNoise,
     birdDirectionNoiseWeight,
+    bounceOffEdge,
+    bounceMargin,
+    bounceTurnFactor,
     setBirdNum,
     setBirdPerceivedRadius,
     setBirdMaxSpeed,
@@ -31,6 +34,9 @@ export default function ToolMenu() {
     setBirdSeparationRadius,
     setBirdDirectionNoise,
     setBirdDirectionNoiseWeight,
+    flipBounceOffEdge,
+    setBounceMargin,
+    setBounceTurnFactor,
   } = useBirdConfig();
 
   const sliders = [
@@ -54,7 +60,7 @@ export default function ToolMenu() {
       label: 'Bird Max Speed',
       value: birdMaxSpeed,
       onValueChange: setBirdMaxSpeed,
-      max: 500,
+      max: 800,
       min: 10,
       step: 10,
     },
@@ -115,11 +121,29 @@ export default function ToolMenu() {
       step: 0.1,
     },
   ];
+  const bounceSlider = [
+    {
+      label: 'Bounce Margin',
+      value: bounceMargin,
+      onValueChange: setBounceMargin,
+      max: 400,
+      min: 200,
+      step: 10,
+    },
+    {
+      label: 'Bounce Turn Factor',
+      value: bounceTurnFactor,
+      onValueChange: setBounceTurnFactor,
+      max: 10,
+      min: 1,
+      step: 0.1,
+    },
+  ];
 
   return (
     <div className="h-screen w-[300px] bg-white bg-opacity-5 backdrop-blur-[2px]">
       <div className="h-full w-full p-8 flex flex-col space-y-3 overflow-scroll text-xs">
-        <p className="text-center text-base">
+        <p className="text-center text-lg">
           Boids{' '}
           <Link
             className="text-sm underline text-blue-600"
@@ -128,7 +152,7 @@ export default function ToolMenu() {
             Source
           </Link>
         </p>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 justify-center">
           <Button onClick={flipMemoFresh} title="Reset">
             <RefreshCcw className="h-4 w-4" />
           </Button>
@@ -150,7 +174,39 @@ export default function ToolMenu() {
         </div>
         {sliders.map((s) => (
           <div key={s.label}>
-            <p className="py-4">
+            <p className="py-2">
+              {s.label}: <span className="bg-black px-2">{s.value}</span>
+            </p>
+            <div className="flex">
+              <p>{s.min}</p>
+              <Slider
+                className="mx-2"
+                defaultValue={[s.value]}
+                onValueChange={(e) => s.onValueChange(e[0])}
+                max={s.max}
+                min={s.min}
+                step={s.step}
+              />
+              <p>{s.max}</p>
+            </div>
+          </div>
+        ))}
+        <div className="flex items-center justify-center space-x-2 pt-4">
+          <Checkbox
+            id="bounce"
+            checked={bounceOffEdge}
+            onClick={flipBounceOffEdge}
+          />
+          <label
+            htmlFor="bounce"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Bounce off from edge
+          </label>
+        </div>
+        {bounceSlider.map((s) => (
+          <div key={s.label}>
+            <p className="py-2">
               {s.label}: <span className="bg-black px-2">{s.value}</span>
             </p>
             <div className="flex">

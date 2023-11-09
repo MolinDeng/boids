@@ -26,6 +26,9 @@ export interface BirdConfig {
   birdSeparationRadius: number;
   birdDirectionNoise: number;
   birdDirectionNoiseWeight: number;
+  bounceOffEdge: boolean;
+  bounceMargin: number;
+  bounceTurnFactor: number; // TODO obtain be calculation
 }
 
 export interface BirdConfigActions {
@@ -39,4 +42,7 @@ export interface BirdConfigActions {
   setBirdSeparationRadius: (n: number) => void;
   setBirdDirectionNoise: (n: number) => void;
   setBirdDirectionNoiseWeight: (n: number) => void;
+  flipBounceOffEdge: () => void;
+  setBounceMargin: (n: number) => void;
+  setBounceTurnFactor: (n: number) => void;
 }

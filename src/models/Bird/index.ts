@@ -62,8 +62,12 @@ export class Bird implements IBird {
       config.birdDirectionNoiseWeight
     );
 
-    // limit speed
+    // ! limit speed. I think speed limit wont be neccessary
     // this.limitSpeed(config.birdMaxSpeed);
+
+    // bounce off edge
+    if (config.bounceOffEdge) this.bounceOffEdge(size, config);
+
     // update position
     this.pos.set(
       this.pos.x + this.vel.x * delta,
@@ -71,7 +75,7 @@ export class Bird implements IBird {
       this.pos.z + this.vel.z * delta
     );
     // check boundaries
-    this.checkBoundaries(size);
+    if (!config.bounceOffEdge) this.checkBoundaries(size);
   }
 
   applyRules(neighbors: IBird[], config: BirdConfig) {
@@ -96,6 +100,16 @@ export class Bird implements IBird {
         MathUtils.randFloat(-birdDirectionNoise, birdDirectionNoise)
       ) * birdDirectionNoiseWeight
     );
+  }
+
+  // bounce off edge
+  bounceOffEdge(size: Size, config: BirdConfig) {
+    const margin = config.bounceMargin;
+    const turnFactor = config.bounceTurnFactor;
+    if (this.pos.x < margin) this.vel.x += turnFactor;
+    if (this.pos.x > size.width - margin) this.vel.x -= turnFactor;
+    if (this.pos.y < margin) this.vel.y += turnFactor;
+    if (this.pos.y > size.height - margin) this.vel.y -= turnFactor;
   }
 
   // boundless world
