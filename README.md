@@ -93,6 +93,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     * [x] Alignment
     * [x] Cohesion
     * [x] Separation
+  * [x] Boundless or Bouce off edge
   * [x] Adjust config through UI
   * [ ] Additional rules (doing now)
     * [x] Direction noise
@@ -112,11 +113,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Contact (TODO)
+## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - <email@example.com>
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Molin Deng - [@molin](https://molin7.vercel.app/) - <mdeng47@gatech.edu>
 
 ## Acknowledgments (TODO)
 
