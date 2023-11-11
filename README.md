@@ -58,6 +58,12 @@
 │   │   │   │   ├── TODO
 ```
 
+### Some Interesting Parameters
+
+* "Separation Weight" 1.1; "Bounce off" On
+
+* "Seperation Weight" 10; "Cohesion Weight" 0.9; "Separation Radius" 3
+
 ## Getting Started
 
 First, install dependencies:
