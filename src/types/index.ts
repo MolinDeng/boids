@@ -29,6 +29,9 @@ export interface BirdConfig {
   bounceOffEdge: boolean;
   bounceMargin: number;
   bounceTurnFactor: number; // TODO obtain be calculation
+
+  birdRemain: number;
+  predatorRemain: number;
 }
 
 export interface BirdConfigActions {
@@ -45,4 +48,7 @@ export interface BirdConfigActions {
   flipBounceOffEdge: () => void;
   setBounceMargin: (n: number) => void;
   setBounceTurnFactor: (n: number) => void;
+
+  setBirdRemain: (n: number) => void;
+  setPredatorRemain: (n: number) => void;
 }

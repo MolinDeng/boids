@@ -105,7 +105,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     * [x] Direction noise
     * [x] Predator/Prey Model
       * [ ] Refine Predator/Prey Model (doing now)
-    * [ ] Energy Model
+    * [ ] Energy Model for Predator (Starvation makes it more aggressive)
 
 * Rendering part
   * [x] Use InstancedMesh to render boids (reduce draw calls)

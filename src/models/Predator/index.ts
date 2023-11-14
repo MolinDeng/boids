@@ -70,13 +70,16 @@ export class Predator implements IPredator {
   getClosestPrey(boids: IBird[]): IBird | undefined {
     let closestPrey: IBird | undefined = undefined;
     let closestDistance = Infinity;
-    boids.forEach((boid) => {
+    let closestIndex = -1;
+    boids.forEach((boid, i) => {
       const distance = this.pos.distanceTo(boid.pos);
       if (distance < 200 && distance < closestDistance) {
         closestDistance = distance;
         closestPrey = boid;
+        closestIndex = i;
       }
     });
+    if (closestDistance < 10) boids.splice(closestIndex, 1); // remove the prey from the boids array
     return closestPrey;
   }
 

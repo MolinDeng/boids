@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import {
   ConeGeometry,
   InstancedMesh,
@@ -21,7 +21,7 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
   const dummy = useMemo(() => new Object3D(), []);
   const dummyPredator = useMemo(() => new Object3D(), []);
 
-  const { birdNum, birdMaxSpeed } = useBirdConfig();
+  const { birdNum, birdMaxSpeed, setBirdRemain } = useBirdConfig();
   const { memoRefresh } = useRenderConfig();
   // create boids logic objects
   const boids = useMemo(() => {
@@ -38,6 +38,10 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
     }
     return boids;
   }, [birdNum, memoRefresh]); // dependency is birdNum and memoRefresh
+
+  useEffect(() => {
+    setBirdRemain(boids.length);
+  }, [boids.length, setBirdRemain]);
 
   // create predators logic objects
   const predators = useMemo(() => {

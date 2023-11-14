@@ -25,6 +25,10 @@ export default function ToolMenu() {
     bounceOffEdge,
     bounceMargin,
     bounceTurnFactor,
+
+    birdRemain,
+    predatorRemain,
+
     setBirdNum,
     setBirdPerceivedRadius,
     setBirdMaxSpeed,
@@ -165,7 +169,7 @@ export default function ToolMenu() {
             <div className="relative inline-block h-4 w-4">
               <Image src={'/prey.png'} fill alt="prey" />
             </div>
-            Prey
+            Prey <span className="px-2">{birdRemain}</span> alive
           </div>
         </div>
         <div className="flex items-center space-x-2 justify-center">

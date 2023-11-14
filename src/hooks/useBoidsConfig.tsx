@@ -25,6 +25,10 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   bounceOffEdge: false,
   bounceMargin: 200,
   bounceTurnFactor: 2,
+
+  birdRemain: 0,
+  predatorRemain: 0,
+
   setBirdNum: (n: number) => set(() => ({ birdNum: n })),
   setBirdPerceivedRadius: (n: number) =>
     set(() => ({ birdPerceivedRadius: n })),
@@ -44,4 +48,7 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
     set((state) => ({ bounceOffEdge: !state.bounceOffEdge })),
   setBounceMargin: (n: number) => set(() => ({ bounceMargin: n })),
   setBounceTurnFactor: (n: number) => set(() => ({ bounceTurnFactor: n })),
+
+  setBirdRemain: (n: number) => set(() => ({ birdRemain: n })),
+  setPredatorRemain: (n: number) => set(() => ({ predatorRemain: n })),
 }));
