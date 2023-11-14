@@ -101,11 +101,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     * [x] Separation
   * [x] Boundless or Bouce off edge
   * [x] Adjust config through UI
-  * [ ] Additional rules (doing now)
+  * [ ] Additional rules
     * [x] Direction noise
-    * [ ] Velocity noise
-  * [ ] Energy Model
-  * [ ] Predator/Prey Model
+    * [x] Predator/Prey Model
+      * [ ] Refine Predator/Prey Model (doing now)
+    * [ ] Energy Model
 
 * Rendering part
   * [x] Use InstancedMesh to render boids (reduce draw calls)
