@@ -8,9 +8,7 @@ interface IAlignment extends Rule {}
 
 export default class Alignment extends Rule implements IAlignment {
   apply(bird: IBird, neighbors: IBird[], config: BirdConfig) {
-    if (neighbors.length === 0) {
-      return;
-    }
+    if (neighbors.length === 0) return;
 
     // neighbors.forEach((neighbor) => this.value.add(neighbor.vel));
     this.value

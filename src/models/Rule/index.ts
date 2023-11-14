@@ -5,8 +5,8 @@ import { Vector3 } from 'three';
 export interface IRule {
   // bird is the bird to apply the rule to
   // neighbors are the birds that are within the radius of the bird
-  apply: (bird: IBird, neighbors: IBird[], config: BirdConfig) => void;
-  accumulate?: (bird: IBird, neighbor: IBird, config: BirdConfig) => void;
+  apply: (...agrs: any) => void;
+  accumulate?: (...agrs: any) => void;
   reset: () => void;
 }
 
@@ -20,6 +20,6 @@ export abstract class Rule implements IRule {
   reset() {
     this.value.set(0, 0, 0);
   }
-  abstract apply(bird: IBird, neighbors: IBird[], config: BirdConfig): void;
-  abstract accumulate(bird: IBird, neighbor: IBird, config: BirdConfig): void;
+
+  abstract apply(...agrs: any): void;
 }

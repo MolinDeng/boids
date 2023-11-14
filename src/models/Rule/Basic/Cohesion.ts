@@ -8,9 +8,7 @@ interface ICohesion extends IRule {}
 
 export default class Alignment extends Rule implements ICohesion {
   apply(bird: IBird, neighbors: IBird[], config: BirdConfig) {
-    if (neighbors.length === 0) {
-      return;
-    }
+    if (neighbors.length === 0) return;
 
     // neighbors.forEach((neighbor) => this.value.add(neighbor.pos));
     this.value

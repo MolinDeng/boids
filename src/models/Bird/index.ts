@@ -5,6 +5,8 @@ import Separation from '@/models/Rule/Basic/Separation';
 import { BirdConfig, BirdStatus } from '@/types';
 import { Size } from '@react-three/fiber';
 import { MathUtils, Vector3 } from 'three';
+import { IPredator } from '@/models/Predator';
+import AvoidPredator from '@/models/Rule/Extension/AvoidPredator';
 
 export interface IBird {
   pos: Vector3; // position
@@ -16,7 +18,13 @@ export interface IBird {
 
   status: BirdStatus;
 
-  update(delta: number, boids: IBird[], size: Size, config: BirdConfig): void;
+  update(
+    delta: number,
+    size: Size,
+    boids: IBird[],
+    predators: IPredator[],
+    config: BirdConfig
+  ): void;
 }
 
 export class Bird implements IBird {
@@ -29,7 +37,7 @@ export class Bird implements IBird {
 
   status: BirdStatus;
 
-  basicRules: IRule[];
+  rules: IRule[];
 
   static axisZ: Vector3 = new Vector3(0, 0, 1);
 
@@ -42,22 +50,33 @@ export class Bird implements IBird {
     this.maxEnergy = 0; // TODO
     this.status = BirdStatus.Flying; // TODO
 
-    this.basicRules = [new Alignment(), new Cohesion(), new Separation()];
+    this.rules = [
+      new Alignment(),
+      new Cohesion(),
+      new Separation(),
+      new AvoidPredator(),
+    ];
   }
 
-  update(delta: number, boids: IBird[], size: Size, config: BirdConfig) {
+  update(
+    delta: number,
+    size: Size,
+    boids: IBird[],
+    predators: IPredator[],
+    config: BirdConfig
+  ) {
     // reset acceleration
     this.acc.set(0, 0, 0);
 
     // find neighbors
     const neighbors = this.getNeighbors(boids, config);
     // apply rules
-    this.applyRules(neighbors, config);
+    this.applyRules(neighbors, config, predators);
 
     // update velocity
     this.vel.add(this.acc.multiplyScalar(delta));
     // add noise to direction
-    this.applyDireactionNoise(
+    this.applyDirectionNoise(
       config.birdDirectionNoise,
       config.birdDirectionNoiseWeight
     );
@@ -74,12 +93,12 @@ export class Bird implements IBird {
       this.pos.y + this.vel.y * delta,
       this.pos.z + this.vel.z * delta
     );
-    // check boundaries
+    // wrap around the screen
     if (!config.bounceOffEdge) this.checkBoundaries(size);
   }
 
-  applyRules(neighbors: IBird[], config: BirdConfig) {
-    this.basicRules.forEach((rule) => rule.apply(this, neighbors, config));
+  applyRules(neighbors: IBird[], config: BirdConfig, preds: IPredator[]) {
+    this.rules.forEach((rule) => rule.apply(this, neighbors, config, preds));
   }
 
   limitSpeed(birdMaxSpeed: number) {
@@ -88,7 +107,7 @@ export class Bird implements IBird {
     }
   }
 
-  applyDireactionNoise(
+  applyDirectionNoise(
     birdDirectionNoise: number,
     birdDirectionNoiseWeight: number
   ) {
@@ -130,8 +149,8 @@ export class Bird implements IBird {
         if (distance < config.birdPerceivedRadius) {
           neighbors.push(bird);
           // accumulate basic rules, for efficiency
-          for (const rule of this.basicRules) {
-            rule.accumulate!(this, bird, config);
+          for (const rule of this.rules) {
+            if (rule.accumulate) rule.accumulate(this, bird, config);
           }
         }
       }

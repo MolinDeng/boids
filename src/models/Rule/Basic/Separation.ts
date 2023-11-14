@@ -21,9 +21,7 @@ export default class Separation extends Rule implements ISeparation {
   }
 
   apply(bird: IBird, neighbors: IBird[], config: BirdConfig) {
-    if (neighbors.length === 0) {
-      return;
-    }
+    if (neighbors.length === 0) return;
 
     // let d: number = 0;
     // neighbors.forEach((neighbor) => {

@@ -6,6 +6,7 @@ import { useBirdConfig, useRenderConfig } from '@/hooks/useBoidsConfig';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { MoveRightIcon, Pause, Play, RefreshCcw } from 'lucide-react';
+import Image from 'next/image';
 
 export default function ToolMenu() {
   const { paused, flipPaused, setPaused, setNextFrame, flipMemoFresh } =
@@ -152,6 +153,21 @@ export default function ToolMenu() {
             Source
           </Link>
         </p>
+        <div className="flex items-center justify-evenly">
+          <div className="flex items-center justify-center">
+            <div className="inline-block relative h-4 w-4">
+              <Image src={'/predator.png'} fill alt="predator" />
+            </div>
+            Predator
+          </div>
+
+          <div className="flex items-center justify-center">
+            <div className="relative inline-block h-4 w-4">
+              <Image src={'/prey.png'} fill alt="prey" />
+            </div>
+            Prey
+          </div>
+        </div>
         <div className="flex items-center space-x-2 justify-center">
           <Button onClick={flipMemoFresh} title="Reset">
             <RefreshCcw className="h-4 w-4" />

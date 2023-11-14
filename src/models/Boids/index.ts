@@ -13,9 +13,8 @@ export class Boids implements IBoids {
     for (let i = 0; i < size; i++) {
       const bird = new Bird();
       bird.pos.set(MathUtils.randFloat(0, w), MathUtils.randFloat(0, h), 0);
-      const randomAngle = MathUtils.randFloat(0, Math.PI * 2);
       bird.vel
-        .set(Math.cos(randomAngle), Math.sin(randomAngle), 0) // random direction
+        .set(MathUtils.randFloat(-1, 1), MathUtils.randFloat(-1, 1), 0)
         .normalize() // normalize
         .multiplyScalar(maxSpeed); // pixels per second
       this.birds.push(bird);
