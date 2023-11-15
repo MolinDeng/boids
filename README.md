@@ -100,9 +100,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     * [x] Cohesion
     * [x] Separation
   * [x] Boundless or Bouce off edge
-  * [ ] Additional rules
+  * [x] Additional rules
     * [x] Direction noise
-    * [ ] Avoid Predator
+    * [x] Avoid Predator
     * [ ] Avoid Obstacle
   * [x] Predator/Prey Model
     * [x] Single Predator
