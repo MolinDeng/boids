@@ -227,7 +227,7 @@ export default function ToolMenu() {
     },
   ];
 
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(true);
 
   return (
     <>
