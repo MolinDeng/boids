@@ -1,13 +1,15 @@
 import { MathUtils, Vector3 } from 'three';
 import { IBird } from '../Bird';
 import { Size } from '@react-three/fiber';
+import { BirdConfig } from '@/types';
+import { DEFAULT_SPEED } from '@/lib/constants';
 
 export interface IPredator {
   pos: Vector3; // position
   vel: Vector3; // velocity
   acc: Vector3; // acceleration
 
-  update(delta: number, boids: IBird[], size: Size): void;
+  update(delta: number, size: Size, boids: IBird[], config: BirdConfig): void;
 }
 
 export class Predator implements IPredator {
@@ -23,7 +25,7 @@ export class Predator implements IPredator {
     this.acc = new Vector3(0, 0, 0);
   }
 
-  update(delta: number, boids: IBird[], size: Size): void {
+  update(delta: number, size: Size, boids: IBird[], config: BirdConfig): void {
     // reset acceleration
     this.acc.set(0, 0, 0);
 
@@ -31,14 +33,18 @@ export class Predator implements IPredator {
     const closestPrey = this.getClosestPrey(boids);
     if (closestPrey) {
       // just chase the prey
-      this.chase(closestPrey);
+      this.chase(closestPrey, config);
     } else {
       // wander around
       this.vel.applyAxisAngle(
         Predator.axisZ,
         MathUtils.degToRad(MathUtils.randFloat(-15, 15))
       );
-      this.vel.normalize().multiplyScalar(400);
+      this.vel
+        .normalize()
+        .multiplyScalar(
+          config.birdMaxSpeed === 0 ? DEFAULT_SPEED : config.birdMaxSpeed
+        );
     }
 
     // update velocity
@@ -56,14 +62,14 @@ export class Predator implements IPredator {
   }
 
   // chase the prey
-  chase(prey: IBird): void {
+  chase(prey: IBird, config: BirdConfig): void {
     this.acc
       .copy(prey.pos)
       .sub(this.pos)
       .normalize()
-      .multiplyScalar(400)
+      .multiplyScalar(config.birdMaxForce)
       .sub(this.vel)
-      .multiplyScalar(1.1);
+      .multiplyScalar(1.1); // TODO adjust through config
   }
 
   // find the most closest prey
@@ -74,6 +80,7 @@ export class Predator implements IPredator {
     boids.forEach((boid, i) => {
       const distance = this.pos.distanceTo(boid.pos);
       if (distance < 200 && distance < closestDistance) {
+        // TODO 200 adjust through config
         closestDistance = distance;
         closestPrey = boid;
         closestIndex = i;

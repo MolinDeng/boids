@@ -11,21 +11,17 @@ import { useFrame } from '@react-three/fiber';
 import { useRenderConfig, useBirdConfig } from '@/hooks/useBoidsConfig';
 import { getAngleFromVector } from '@/lib/utils';
 import { IPredator, Predator } from '@/models/Predator';
+import { DEFAULT_SPEED } from '@/lib/constants';
 
 export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
-  // shared geometry
-  // const coneGeometry = useMemo(() => new ConeGeometry(3, 10), []);
-  // shared material
-  // const mat = useMemo(() => new MeshStandardMaterial({ color: 'white' }), []);
   // shared dummy
   const dummy = useMemo(() => new Object3D(), []);
   const dummyPredator = useMemo(() => new Object3D(), []);
 
-  const { birdNum, birdMaxSpeed, setBirdRemain } = useBirdConfig();
+  const { birdNum, birdMaxSpeed, setBirdRemain, predatorNum } = useBirdConfig();
   const { memoRefresh } = useRenderConfig();
   // create boids logic objects
   const boids = useMemo(() => {
-    // TODO use Boids class, maybe not necessary
     const boids: IBird[] = [];
     for (let i = 0; i < birdNum; i++) {
       const bird = new Bird();
@@ -33,11 +29,11 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
       bird.vel
         .set(MathUtils.randFloat(-1, 1), MathUtils.randFloat(-1, 1), 0)
         .normalize() // normalize
-        .multiplyScalar(birdMaxSpeed); // pixels per second
+        .multiplyScalar(birdMaxSpeed === 0 ? DEFAULT_SPEED : birdMaxSpeed); // pixels per second
       boids.push(bird);
     }
     return boids;
-  }, [birdNum, memoRefresh]); // dependency is birdNum and memoRefresh
+  }, [birdNum, predatorNum, memoRefresh]); // dependency is birdNum and memoRefresh
 
   useEffect(() => {
     setBirdRemain(boids.length);
@@ -46,17 +42,17 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
   // create predators logic objects
   const predators = useMemo(() => {
     const predators: IPredator[] = [];
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < predatorNum; i++) {
       const predator = new Predator();
       predator.pos.set(MathUtils.randFloat(0, w), MathUtils.randFloat(0, h), 0);
       predator.vel
         .set(MathUtils.randFloat(-1, 1), MathUtils.randFloat(-1, 1), 0)
         .normalize() // normalize
-        .multiplyScalar(birdMaxSpeed); // pixels per second
+        .multiplyScalar(birdMaxSpeed === 0 ? DEFAULT_SPEED : birdMaxSpeed); // pixels per second
       predators.push(predator);
     }
     return predators;
-  }, [memoRefresh]);
+  }, [birdNum, predatorNum, memoRefresh]);
 
   const model = useRef<InstancedMesh>(null!);
   const predatorModel = useRef<InstancedMesh>(null!);
@@ -68,7 +64,6 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
     ) {
       useRenderConfig.getState().setNextFrame(false);
       // update boids
-      // TODO use Boids class, maybe not necessary
       boids.forEach((bird, i) => {
         bird.update(
           delta,
@@ -87,7 +82,7 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
 
       // update predators
       predators.forEach((predator, i) => {
-        predator.update(delta, boids, state.viewport);
+        predator.update(delta, state.viewport, boids, useBirdConfig.getState());
         dummyPredator.position.copy(predator.pos);
         dummyPredator.rotation.z =
           getAngleFromVector(predator.vel) - Math.PI / 2;

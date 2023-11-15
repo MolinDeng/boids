@@ -104,7 +104,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   * [ ] Additional rules
     * [x] Direction noise
     * [x] Predator/Prey Model
-      * [ ] Refine Predator/Prey Model (doing now)
+      * [x] Single Predator
+      * [x] Multiple Predators
     * [ ] Energy Model for Predator (Starvation makes it more aggressive)
 
 * Rendering part

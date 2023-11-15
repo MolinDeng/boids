@@ -81,8 +81,7 @@ export class Bird implements IBird {
       config.birdDirectionNoiseWeight
     );
 
-    // ! limit speed. I think speed limit wont be neccessary
-    // this.limitSpeed(config.birdMaxSpeed);
+    if (config.birdMaxSpeed > 0) this.limitSpeed(config.birdMaxSpeed);
 
     // bounce off edge
     if (config.bounceOffEdge) this.bounceOffEdge(size, config);

@@ -14,7 +14,7 @@ export default class Alignment extends Rule implements IAlignment {
     this.value
       .divideScalar(neighbors.length)
       .normalize()
-      .multiplyScalar(config.birdMaxSpeed)
+      .multiplyScalar(config.birdMaxForce)
       .sub(bird.vel)
       .multiplyScalar(config.birdAlignmentWeight);
 

@@ -15,7 +15,7 @@ export default class Alignment extends Rule implements ICohesion {
       .divideScalar(neighbors.length)
       .sub(bird.pos)
       .normalize()
-      .multiplyScalar(config.birdMaxSpeed)
+      .multiplyScalar(config.birdMaxForce)
       .sub(bird.vel)
       .multiplyScalar(config.birdCohesionWeight);
 

@@ -1,12 +1,81 @@
 'use client';
+import { FC } from 'react';
 import Link from 'next/link';
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useBirdConfig, useRenderConfig } from '@/hooks/useBoidsConfig';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { MoveRightIcon, Pause, Play, RefreshCcw } from 'lucide-react';
+import {
+  HelpCircle,
+  MoveRightIcon,
+  Pause,
+  Play,
+  RefreshCcw,
+  Settings,
+} from 'lucide-react';
 import Image from 'next/image';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
+
+interface SliderProps {
+  label: string;
+  value: number;
+  onValueChange: (value: number) => void;
+  max: number;
+  min: number;
+  step: number;
+  explain?: string;
+}
+
+const SliderComponent: FC<SliderProps> = ({
+  label,
+  value,
+  onValueChange,
+  max,
+  min,
+  step,
+  explain,
+}) => {
+  return (
+    <TooltipProvider>
+      <div key={label}>
+        <p className="py-2 flex items-center">
+          {label}{' '}
+          {explain && (
+            <Tooltip delayDuration={300}>
+              <TooltipTrigger className="cursor-default mx-1 animate-bounce">
+                <HelpCircle className="h-4 w-4" />
+              </TooltipTrigger>
+              <TooltipContent className="w-80 p-2 text-center">
+                {explain}
+              </TooltipContent>
+            </Tooltip>
+          )}
+          : <span className="bg-black px-2">{value}</span>
+        </p>
+
+        <div className="flex">
+          <p>{min}</p>
+          <Slider
+            className="mx-2"
+            defaultValue={[value]}
+            onValueChange={(e) => onValueChange(e[0])}
+            max={max}
+            min={min}
+            step={step}
+          />
+          <p>{max}</p>
+        </div>
+      </div>
+    </TooltipProvider>
+  );
+};
 
 export default function ToolMenu() {
   const { paused, flipPaused, setPaused, setNextFrame, flipMemoFresh } =
@@ -15,7 +84,7 @@ export default function ToolMenu() {
     birdNum,
     birdPerceivedRadius,
     birdMaxSpeed,
-    // birdMaxForce,
+    birdMaxForce,
     birdSeparationWeight,
     birdAlignmentWeight,
     birdCohesionWeight,
@@ -27,12 +96,11 @@ export default function ToolMenu() {
     bounceTurnFactor,
 
     birdRemain,
-    predatorRemain,
 
     setBirdNum,
     setBirdPerceivedRadius,
     setBirdMaxSpeed,
-    // setBirdMaxForce,
+    setBirdMaxForce,
     setBirdSeparationWeight,
     setBirdAlignmentWeight,
     setBirdCohesionWeight,
@@ -42,6 +110,10 @@ export default function ToolMenu() {
     flipBounceOffEdge,
     setBounceMargin,
     setBounceTurnFactor,
+
+    // predator config
+    predatorNum,
+    setPredatorNum,
   } = useBirdConfig();
 
   const sliders = [
@@ -54,6 +126,14 @@ export default function ToolMenu() {
       step: 10,
     },
     {
+      label: 'Predator Num',
+      value: predatorNum,
+      onValueChange: setPredatorNum,
+      max: 10,
+      min: 0,
+      step: 1,
+    },
+    {
       label: 'Bird Perceived Radius',
       value: birdPerceivedRadius,
       onValueChange: setBirdPerceivedRadius,
@@ -63,20 +143,22 @@ export default function ToolMenu() {
     },
     {
       label: 'Bird Max Speed',
+      explain:
+        '0 means no limit. It recommends to set no limit. Adjust the max force instead.',
       value: birdMaxSpeed,
       onValueChange: setBirdMaxSpeed,
+      max: 800,
+      min: 0,
+      step: 10,
+    },
+    {
+      label: 'Max Force',
+      value: birdMaxForce,
+      onValueChange: setBirdMaxForce,
       max: 800,
       min: 10,
       step: 10,
     },
-    // {
-    //   label: 'Bird Max Force',
-    //   value: birdMaxForce,
-    //   onValueChange: setBirdMaxForce,
-    //   max: 500,
-    //   min: 0,
-    //   step: 10,
-    // },
     {
       label: 'Bird Alignment Weight',
       value: birdAlignmentWeight,
@@ -145,105 +227,94 @@ export default function ToolMenu() {
     },
   ];
 
-  return (
-    <div className="h-screen w-[300px] bg-white bg-opacity-5 backdrop-blur-[2px]">
-      <div className="h-full w-full p-8 flex flex-col space-y-3 overflow-scroll text-xs">
-        <p className="text-center text-lg">
-          Boids{' '}
-          <Link
-            className="text-sm underline text-blue-600"
-            href={'https://github.com/MolinDeng/boids'}
-          >
-            Source
-          </Link>
-        </p>
-        <div className="flex items-center justify-evenly">
-          <div className="flex items-center justify-center">
-            <div className="inline-block relative h-4 w-4">
-              <Image src={'/predator.png'} fill alt="predator" />
-            </div>
-            Predator
-          </div>
+  const [open, setOpen] = React.useState<boolean>(false);
 
-          <div className="flex items-center justify-center">
-            <div className="relative inline-block h-4 w-4">
-              <Image src={'/prey.png'} fill alt="prey" />
+  return (
+    <>
+      <div
+        className={cn(
+          'h-screen w-[300px] bg-white bg-opacity-5 backdrop-blur-[2px] transition-transform',
+          open ? 'translate-x-0' : '-translate-x-full'
+        )}
+      >
+        <div className="h-full w-full p-8 flex flex-col space-y-2 overflow-scroll text-xs">
+          <p className="text-center text-lg">
+            Boids{' '}
+            <Link
+              className="text-sm underline text-blue-600"
+              href={'https://github.com/MolinDeng/boids'}
+            >
+              Source
+            </Link>
+          </p>
+          <div className="flex items-center justify-evenly">
+            <div className="flex items-center justify-center">
+              <div className="inline-block relative h-4 w-4">
+                <Image src={'/predator.png'} fill alt="predator" />
+              </div>
+              Predator
             </div>
-            Prey <span className="px-2">{birdRemain}</span> alive
-          </div>
-        </div>
-        <div className="flex items-center space-x-2 justify-center">
-          <Button onClick={flipMemoFresh} title="Reset">
-            <RefreshCcw className="h-4 w-4" />
-          </Button>
-          <Button onClick={flipPaused} title={paused ? 'Resume' : 'Pause'}>
-            {paused ? (
-              <Play className="h-4 w-4" />
-            ) : (
-              <Pause className="h-4 w-4" />
-            )}
-          </Button>
-          <Button
-            disabled={!paused}
-            onClick={(e) => {
-              setNextFrame(true);
-            }}
-          >
-            Next Frame
-          </Button>
-        </div>
-        {sliders.map((s) => (
-          <div key={s.label}>
-            <p className="py-2">
-              {s.label}: <span className="bg-black px-2">{s.value}</span>
-            </p>
-            <div className="flex">
-              <p>{s.min}</p>
-              <Slider
-                className="mx-2"
-                defaultValue={[s.value]}
-                onValueChange={(e) => s.onValueChange(e[0])}
-                max={s.max}
-                min={s.min}
-                step={s.step}
-              />
-              <p>{s.max}</p>
+
+            <div className="flex items-center justify-center">
+              <div className="relative inline-block h-4 w-4">
+                <Image src={'/prey.png'} fill alt="prey" />
+              </div>
+              Prey <span className="px-2">{birdRemain}</span> alive
             </div>
           </div>
-        ))}
-        <div className="flex items-center justify-center space-x-2 pt-4">
-          <Checkbox
-            id="bounce"
-            checked={bounceOffEdge}
-            onClick={flipBounceOffEdge}
-          />
-          <label
-            htmlFor="bounce"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Bounce off from edge
-          </label>
-        </div>
-        {bounceSlider.map((s) => (
-          <div key={s.label}>
-            <p className="py-2">
-              {s.label}: <span className="bg-black px-2">{s.value}</span>
-            </p>
-            <div className="flex">
-              <p>{s.min}</p>
-              <Slider
-                className="mx-2"
-                defaultValue={[s.value]}
-                onValueChange={(e) => s.onValueChange(e[0])}
-                max={s.max}
-                min={s.min}
-                step={s.step}
-              />
-              <p>{s.max}</p>
-            </div>
+          <div className="flex items-center space-x-2 justify-center">
+            <Button size="sm" onClick={flipMemoFresh} title="Reset">
+              <RefreshCcw className="h-4 w-4" />
+            </Button>
+            <Button
+              size="sm"
+              onClick={flipPaused}
+              title={paused ? 'Resume' : 'Pause'}
+            >
+              {paused ? (
+                <Play className="h-4 w-4" />
+              ) : (
+                <Pause className="h-4 w-4" />
+              )}
+            </Button>
+            <Button
+              size="sm"
+              disabled={!paused}
+              onClick={(e) => {
+                setNextFrame(true);
+              }}
+            >
+              Next Frame
+            </Button>
           </div>
-        ))}
+          {sliders.map((s) => (
+            <SliderComponent key={s.label} {...s} />
+          ))}
+          <div className="flex items-center justify-center space-x-2 pt-4">
+            <Checkbox
+              id="bounce"
+              checked={bounceOffEdge}
+              onClick={flipBounceOffEdge}
+            />
+            <label
+              htmlFor="bounce"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Bounce off from edge
+            </label>
+          </div>
+          {bounceSlider.map((s) => (
+            <SliderComponent key={s.label} {...s} />
+          ))}
+        </div>
       </div>
-    </div>
+      <Button
+        variant={'ghost'}
+        className="absolute left-0 top-0"
+        onClick={() => setOpen(!open)}
+      >
+        <Settings className="h-4 w-4" />
+      </Button>
+    </>
   );
 }

@@ -37,7 +37,7 @@ export default class Separation extends Rule implements ISeparation {
       this.value
         .divideScalar(this.cnt)
         .normalize()
-        .multiplyScalar(config.birdMaxSpeed)
+        .multiplyScalar(config.birdMaxForce)
         .sub(bird.vel)
         .multiplyScalar(config.birdSeparationWeight);
 

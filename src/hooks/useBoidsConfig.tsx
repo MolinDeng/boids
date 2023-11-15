@@ -14,8 +14,8 @@ export const useRenderConfig = create<PauseState>((set) => ({
 export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   birdNum: 500,
   birdPerceivedRadius: 50,
-  birdMaxSpeed: 400,
-  // birdMaxForce: 100,
+  birdMaxSpeed: 0,
+  birdMaxForce: 400,
   birdSeparationWeight: 1,
   birdAlignmentWeight: 0.9,
   birdCohesionWeight: 0.9,
@@ -27,13 +27,14 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   bounceTurnFactor: 2,
 
   birdRemain: 0,
-  predatorRemain: 0,
+  // predator config
+  predatorNum: 1,
 
   setBirdNum: (n: number) => set(() => ({ birdNum: n })),
   setBirdPerceivedRadius: (n: number) =>
     set(() => ({ birdPerceivedRadius: n })),
   setBirdMaxSpeed: (n: number) => set(() => ({ birdMaxSpeed: n })),
-  // setBirdMaxForce: (n: number) => set(() => ({ birdMaxForce: n })),
+  setBirdMaxForce: (n: number) => set(() => ({ birdMaxForce: n })),
   setBirdSeparationWeight: (n: number) =>
     set(() => ({ birdSeparationWeight: n })),
   setBirdAlignmentWeight: (n: number) =>
@@ -50,5 +51,7 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   setBounceTurnFactor: (n: number) => set(() => ({ bounceTurnFactor: n })),
 
   setBirdRemain: (n: number) => set(() => ({ birdRemain: n })),
-  setPredatorRemain: (n: number) => set(() => ({ predatorRemain: n })),
+
+  // predator config actions
+  setPredatorNum: (n: number) => set(() => ({ predatorNum: n })),
 }));

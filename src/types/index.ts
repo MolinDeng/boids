@@ -19,7 +19,7 @@ export interface BirdConfig {
   birdNum: number;
   birdPerceivedRadius: number;
   birdMaxSpeed: number;
-  // birdMaxForce: number;
+  birdMaxForce: number;
   birdSeparationWeight: number;
   birdAlignmentWeight: number;
   birdCohesionWeight: number;
@@ -31,14 +31,16 @@ export interface BirdConfig {
   bounceTurnFactor: number; // TODO obtain be calculation
 
   birdRemain: number;
-  predatorRemain: number;
+
+  // predator config
+  predatorNum: number;
 }
 
 export interface BirdConfigActions {
   setBirdNum: (n: number) => void;
   setBirdPerceivedRadius: (n: number) => void;
   setBirdMaxSpeed: (n: number) => void;
-  // setBirdMaxForce: (n: number) => void;
+  setBirdMaxForce: (n: number) => void;
   setBirdSeparationWeight: (n: number) => void;
   setBirdAlignmentWeight: (n: number) => void;
   setBirdCohesionWeight: (n: number) => void;
@@ -50,5 +52,6 @@ export interface BirdConfigActions {
   setBounceTurnFactor: (n: number) => void;
 
   setBirdRemain: (n: number) => void;
-  setPredatorRemain: (n: number) => void;
+  // predator config actions
+  setPredatorNum: (n: number) => void;
 }
