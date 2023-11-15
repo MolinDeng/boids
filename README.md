@@ -100,21 +100,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     * [x] Cohesion
     * [x] Separation
   * [x] Boundless or Bouce off edge
-  * [x] Adjust config through UI
   * [ ] Additional rules
     * [x] Direction noise
-    * [x] Predator/Prey Model
-      * [x] Single Predator
-      * [x] Multiple Predators
+    * [ ] Avoid Predator
+    * [ ] Avoid Obstacle
+  * [x] Predator/Prey Model
+    * [x] Single Predator
+    * [x] Multiple Predators
     * [ ] Energy Model for Predator (Starvation makes it more aggressive)
 
 * Rendering part
   * [x] Use InstancedMesh to render boids (reduce draw calls)
 
 * More interative
-  * [ ] Mouse click concentration
+  * [x] Adjust config through UI
   * [x] Next Frame button
   * [x] Soft Refresh
+  * [ ] Mouse click concentration
 
 ## License
 
