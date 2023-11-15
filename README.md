@@ -43,19 +43,24 @@
 │   │   ├── BoidCanvas.tsx
 │   │   ├── BoidsRenderer.tsx
 # UI part
-│   │   ├── ToolMenu.tsx
+│   │   ├── ControlPanel.tsx
 # Logic part
 │   ├── models
 │   │   ├── Bird
 │   │   │   ├── index.ts
+│   │   ├── Predator
+│   │   │   ├── index.ts
 │   │   ├── Rule
+│   │   │   ├── index.ts (Rule Base Class)
 │   │   │   ├── Basic
-│   │   │   │   ├── index.ts
 │   │   │   │   ├── Alignment.ts
 │   │   │   │   ├── Cohesion.ts
 │   │   │   │   ├── Separation.ts
 │   │   │   ├── Extented
-│   │   │   │   ├── TODO
+│   │   │   │   ├── AvoidPredator.ts
+# State Management
+│   ├── hooks
+│   │   ├── useBoidsConfig.tsx
 ```
 
 ### Some Interesting Parameters
@@ -70,24 +75,12 @@ First, install dependencies:
 
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
 ```
 
 Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -117,6 +110,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   * [x] Next Frame button
   * [x] Soft Refresh
   * [ ] Mouse click concentration
+
+* Data/Simulation Analysis
+  * [ ] Simulate "Flocking" behavior with different rule weights
+  * [ ] Simulate "Avoid Predator" rule
+  * [ ] Simulate "Avoid Obstacle" rule
+  * [ ] How to measure the number of flocks
+  * [ ] Track the number of flocks over time
+  * [ ] Track the number of boids in each flock over time
+  * [ ] Track the alive rate of boids when a predator is present over time given birds flock or not
 
 ## License
 
