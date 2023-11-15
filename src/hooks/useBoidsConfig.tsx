@@ -24,7 +24,7 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   birdDirectionNoiseWeight: 0.1,
   bounceOffEdge: false,
   bounceMargin: 200,
-  bounceTurnFactor: 2,
+  bounceTurnFactor: 4,
 
   birdRemain: 0,
   // predator config
