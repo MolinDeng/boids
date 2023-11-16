@@ -11,6 +11,14 @@ export const useRenderConfig = create<PauseState>((set) => ({
   flipMemoFresh: () => set((state) => ({ memoRefresh: !state.memoRefresh })),
 }));
 
+export const useObstacleConfig = create<{
+  active: boolean;
+  flipActive: () => void;
+}>((set) => ({
+  active: false,
+  flipActive: () => set((state) => ({ active: !state.active })),
+}));
+
 export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   birdNum: 500,
   birdPerceivedRadius: 50,

@@ -3,7 +3,11 @@ import { FC } from 'react';
 import Link from 'next/link';
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useBirdConfig, useRenderConfig } from '@/hooks/useBoidsConfig';
+import {
+  useBirdConfig,
+  useObstacleConfig,
+  useRenderConfig,
+} from '@/hooks/useBoidsConfig';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import {
@@ -78,6 +82,8 @@ const SliderComponent: FC<SliderProps> = ({
 };
 
 export default function ToolMenu() {
+  const { active: obstacleActive, flipActive: flipObstacleActive } =
+    useObstacleConfig();
   const { paused, flipPaused, setPaused, setNextFrame, flipMemoFresh } =
     useRenderConfig();
   const {
@@ -306,6 +312,19 @@ export default function ToolMenu() {
           {bounceSlider.map((s) => (
             <SliderComponent key={s.label} {...s} />
           ))}
+          <div className="flex items-center justify-center space-x-2 pt-4">
+            <Checkbox
+              id="obtacle"
+              checked={obstacleActive}
+              onClick={flipObstacleActive}
+            />
+            <label
+              htmlFor="obtacle"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Show Obstacles (Drag to move)
+            </label>
+          </div>
         </div>
       </div>
       <Button
