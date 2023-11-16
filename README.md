@@ -95,13 +95,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     * [x] Direction noise
     * [x] Avoid Predator
     * [x] Avoid Obstacle
+    * [ ] Goal setting
   * [x] Predator/Prey Model
     * [x] Single Predator
     * [x] Multiple Predators
-    * [ ] Energy Model for Predator (Starvation makes it more aggressive)
+    * [ ] Energy Model
+      * [ ] for predator, starvation makes it more aggressive
+      * [ ] for prey, starvation makes it more likely to be caught
+      * [ ] for prey, perching occasionally to rest and regain energy
 
 * Rendering part
-  * [x] Use InstancedMesh to render boids (reduce draw calls)
+  * [x] Use InstancedMesh and shared material to render boids (reduce draw calls)
 
 * More interative
   * [x] Adjust config through UI
