@@ -11,13 +11,13 @@ import { useDrag } from '@use-gesture/react';
 
 function ObstacleMesh({ obj }: { obj: Obstacle }) {
   const ref = useRef<Mesh>(null!);
-  const bind = useDrag(({ offset: [x, y] }) => {
-    obj.pos.set(obj.initPos.x + x, obj.initPos.y - y, 0);
+  const bind = useDrag(({ delta: [x, y] }) => {
+    obj.pos.set(obj.pos.x + x, obj.pos.y - y, 0);
     ref.current.position.set(obj.pos.x, obj.pos.y, 5);
   });
 
   return (
-    <mesh {...(bind() as MeshProps)} ref={ref} position={obj.initPos}>
+    <mesh {...(bind() as MeshProps)} ref={ref} position={obj.pos}>
       <circleGeometry args={[obj.radius]} />
       <meshStandardMaterial color="cornflowerblue" />
     </mesh>
