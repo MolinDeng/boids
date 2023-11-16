@@ -40,8 +40,9 @@
 ├── src
 # Render part
 │   ├── components
-│   │   ├── BoidCanvas.tsx
+│   │   ├── MyCanvas.tsx
 │   │   ├── BoidsRenderer.tsx
+│   │   │   ├── useFrame (update per frame)
 # UI part
 │   │   ├── ControlPanel.tsx
 # Logic part
@@ -49,6 +50,8 @@
 │   │   ├── Bird
 │   │   │   ├── index.ts
 │   │   ├── Predator
+│   │   │   ├── index.ts
+│   │   ├── Obstacle
 │   │   │   ├── index.ts
 │   │   ├── Rule
 │   │   │   ├── index.ts (Rule Base Class)
@@ -58,16 +61,11 @@
 │   │   │   │   ├── Separation.ts
 │   │   │   ├── Extented
 │   │   │   │   ├── AvoidPredator.ts
+│   │   │   │   ├── AvoidObstacles.ts
 # State Management
 │   ├── hooks
 │   │   ├── useBoidsConfig.tsx
 ```
-
-### Some Interesting Parameters
-
-* "Separation Weight" 1.1; "Bounce off" On
-
-* "Seperation Weight" 10; "Cohesion Weight" 0.9; "Separation Radius" 3
 
 ## Getting Started
 
@@ -96,7 +94,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   * [x] Additional rules
     * [x] Direction noise
     * [x] Avoid Predator
-    * [ ] Avoid Obstacle
+    * [x] Avoid Obstacle
   * [x] Predator/Prey Model
     * [x] Single Predator
     * [x] Multiple Predators
@@ -109,6 +107,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   * [x] Adjust config through UI
   * [x] Next Frame button
   * [x] Soft Refresh
+  * [x] Drag to move obstacle
   * [ ] Mouse click concentration
 
 * Data/Simulation Analysis
@@ -127,19 +126,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Contact
 
 Molin Deng - [@molin](https://molin7.vercel.app/) - <mdeng47@gatech.edu>
-
-## Acknowledgments (TODO)
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
 
 ## Useful Links
 
