@@ -1,13 +1,21 @@
 // * Cohesion: Bird tries to fly toward the centre of mass of its neighbors
 
 import { IBird } from '@/models/Bird';
+import { IObstacle } from '@/models/Obstacle';
+import { IPredator } from '@/models/Predator';
 import { IRule, Rule } from '@/models/Rule';
 import { BirdConfig } from '@/types';
 
 interface ICohesion extends IRule {}
 
 export default class Alignment extends Rule implements ICohesion {
-  apply(bird: IBird, neighbors: IBird[], config: BirdConfig) {
+  apply(
+    bird: IBird,
+    neighbors: IBird[],
+    predators: IPredator[],
+    obstacles: IObstacle[],
+    config: BirdConfig
+  ) {
     if (neighbors.length === 0) return;
 
     // neighbors.forEach((neighbor) => this.value.add(neighbor.pos));

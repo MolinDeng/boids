@@ -1,9 +1,11 @@
-export enum BirdStatus {
-  Landed,
-  Flying,
-  // Alive,
-  // Dead,
-}
+import { Vector3 } from 'three';
+
+// export enum BirdStatus {
+//   Landed,
+//   Flying,
+//   // Alive,
+//   // Dead,
+// }
 
 export interface PauseState {
   paused: boolean;
@@ -34,6 +36,8 @@ export interface BirdConfig {
 
   // predator config
   predatorNum: number;
+  // obstacle config
+  perceiveObstacle: boolean;
 }
 
 export interface BirdConfigActions {
@@ -54,4 +58,6 @@ export interface BirdConfigActions {
   setBirdRemain: (n: number) => void;
   // predator config actions
   setPredatorNum: (n: number) => void;
+  // obstacle config actions
+  flipPerceiveObstacle: () => void;
 }

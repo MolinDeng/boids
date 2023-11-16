@@ -3,13 +3,20 @@ import { IBird } from '../Bird';
 import { Size } from '@react-three/fiber';
 import { BirdConfig } from '@/types';
 import { DEFAULT_SPEED } from '@/lib/constants';
+import { IObstacle } from '@/models/Obstacle';
 
 export interface IPredator {
   pos: Vector3; // position
   vel: Vector3; // velocity
   acc: Vector3; // acceleration
 
-  update(delta: number, size: Size, boids: IBird[], config: BirdConfig): void;
+  update(
+    delta: number,
+    size: Size,
+    boids: IBird[],
+    obstacles: IObstacle[],
+    config: BirdConfig
+  ): void;
 }
 
 export class Predator implements IPredator {
@@ -25,7 +32,13 @@ export class Predator implements IPredator {
     this.acc = new Vector3(0, 0, 0);
   }
 
-  update(delta: number, size: Size, boids: IBird[], config: BirdConfig): void {
+  update(
+    delta: number,
+    size: Size,
+    boids: IBird[],
+    obstacles: IObstacle[],
+    config: BirdConfig
+  ): void {
     // reset acceleration
     this.acc.set(0, 0, 0);
 
@@ -46,6 +59,7 @@ export class Predator implements IPredator {
           config.birdMaxSpeed === 0 ? DEFAULT_SPEED : config.birdMaxSpeed
         );
     }
+    // avoid obstacles
 
     // update velocity
     this.vel.add(this.acc.multiplyScalar(delta));

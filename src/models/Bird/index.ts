@@ -2,27 +2,25 @@ import { IRule } from '@/models/Rule';
 import Alignment from '@/models/Rule/Basic/Alignment';
 import Cohesion from '@/models/Rule/Basic/Cohesion';
 import Separation from '@/models/Rule/Basic/Separation';
-import { BirdConfig, BirdStatus } from '@/types';
+import { BirdConfig } from '@/types';
 import { Size } from '@react-three/fiber';
 import { MathUtils, Vector3 } from 'three';
 import { IPredator } from '@/models/Predator';
 import AvoidPredator from '@/models/Rule/Extension/AvoidPredator';
+import AvoidObstacles from '@/models/Rule/Extension/AvoidObstacles';
+import { IObstacle } from '@/models/Obstacle';
 
 export interface IBird {
   pos: Vector3; // position
   vel: Vector3; // velocity
   acc: Vector3; // acceleration
 
-  energy: number;
-  maxEnergy: number;
-
-  status: BirdStatus;
-
   update(
     delta: number,
     size: Size,
     boids: IBird[],
     predators: IPredator[],
+    obstacles: IObstacle[],
     config: BirdConfig
   ): void;
 }
@@ -31,11 +29,6 @@ export class Bird implements IBird {
   pos: Vector3;
   vel: Vector3;
   acc: Vector3;
-
-  energy: number;
-  maxEnergy: number;
-
-  status: BirdStatus;
 
   rules: IRule[];
 
@@ -46,14 +39,11 @@ export class Bird implements IBird {
     this.vel = new Vector3(0, 0, 0);
     this.acc = new Vector3(0, 0, 0);
 
-    this.energy = 0; // TODO
-    this.maxEnergy = 0; // TODO
-    this.status = BirdStatus.Flying; // TODO
-
     this.rules = [
       new Alignment(),
       new Cohesion(),
       new Separation(),
+      new AvoidObstacles(),
       new AvoidPredator(),
     ];
   }
@@ -63,6 +53,7 @@ export class Bird implements IBird {
     size: Size,
     boids: IBird[],
     predators: IPredator[],
+    obstacles: IObstacle[],
     config: BirdConfig
   ) {
     // reset acceleration
@@ -71,7 +62,7 @@ export class Bird implements IBird {
     // find neighbors
     const neighbors = this.getNeighbors(boids, config);
     // apply rules
-    this.applyRules(neighbors, config, predators);
+    this.applyRules(neighbors, predators, obstacles, config);
 
     // update velocity
     this.vel.add(this.acc.multiplyScalar(delta));
@@ -96,8 +87,15 @@ export class Bird implements IBird {
     if (!config.bounceOffEdge) this.checkBoundaries(size);
   }
 
-  applyRules(neighbors: IBird[], config: BirdConfig, preds: IPredator[]) {
-    this.rules.forEach((rule) => rule.apply(this, neighbors, config, preds));
+  applyRules(
+    neighbors: IBird[],
+    preds: IPredator[],
+    obstacles: IObstacle[],
+    config: BirdConfig
+  ) {
+    this.rules.forEach((rule) =>
+      rule.apply(this, neighbors, preds, obstacles, config)
+    );
   }
 
   limitSpeed(birdMaxSpeed: number) {

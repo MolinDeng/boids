@@ -3,11 +3,7 @@ import { FC } from 'react';
 import Link from 'next/link';
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  useBirdConfig,
-  useObstacleConfig,
-  useRenderConfig,
-} from '@/hooks/useBoidsConfig';
+import { useBirdConfig, useRenderConfig } from '@/hooks/useBoidsConfig';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import {
@@ -82,8 +78,6 @@ const SliderComponent: FC<SliderProps> = ({
 };
 
 export default function ToolMenu() {
-  const { active: obstacleActive, flipActive: flipObstacleActive } =
-    useObstacleConfig();
   const { paused, flipPaused, setPaused, setNextFrame, flipMemoFresh } =
     useRenderConfig();
   const {
@@ -120,6 +114,9 @@ export default function ToolMenu() {
     // predator config
     predatorNum,
     setPredatorNum,
+    // obstacle config
+    perceiveObstacle,
+    flipPerceiveObstacle,
   } = useBirdConfig();
 
   const sliders = [
@@ -315,8 +312,8 @@ export default function ToolMenu() {
           <div className="flex items-center justify-center space-x-2 pt-4">
             <Checkbox
               id="obtacle"
-              checked={obstacleActive}
-              onClick={flipObstacleActive}
+              checked={perceiveObstacle}
+              onClick={flipPerceiveObstacle}
             />
             <label
               htmlFor="obtacle"

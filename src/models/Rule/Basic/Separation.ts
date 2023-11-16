@@ -1,6 +1,8 @@
 // * Separation: Bird tries to avoid collision with its neighbors
 
 import { IBird } from '@/models/Bird';
+import { IObstacle } from '@/models/Obstacle';
+import { IPredator } from '@/models/Predator';
 import { Rule } from '@/models/Rule';
 import { BirdConfig } from '@/types';
 import { Vector3 } from 'three';
@@ -20,7 +22,13 @@ export default class Separation extends Rule implements ISeparation {
     this.cnt = 0;
   }
 
-  apply(bird: IBird, neighbors: IBird[], config: BirdConfig) {
+  apply(
+    bird: IBird,
+    neighbors: IBird[],
+    predators: IPredator[],
+    obstacles: IObstacle[],
+    config: BirdConfig
+  ) {
     if (neighbors.length === 0) return;
 
     // let d: number = 0;
@@ -39,7 +47,7 @@ export default class Separation extends Rule implements ISeparation {
         .normalize()
         .multiplyScalar(config.birdMaxForce)
         .sub(bird.vel)
-        .multiplyScalar(config.birdSeparationWeight);
+        .multiplyScalar(config.birdSeparationWeight); // TODO this weight should be distance dependent
 
       // bound by max force
       // if (config.birdMaxForce !== 0 && this.value.length() > config.birdMaxForce)

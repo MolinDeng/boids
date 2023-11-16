@@ -5,9 +5,9 @@ import { IRule, Rule } from '@/models/Rule';
 import { BirdConfig } from '@/types';
 import { Vector3 } from 'three';
 
-interface IAvoidPredator extends IRule {}
+interface IAvoidObstacles extends IRule {}
 
-export default class AvoidPredator extends Rule implements IAvoidPredator {
+export default class AvoidObstacles extends Rule implements IAvoidObstacles {
   diff: Vector3;
 
   constructor() {
@@ -22,15 +22,15 @@ export default class AvoidPredator extends Rule implements IAvoidPredator {
     obstacles: IObstacle[],
     config: BirdConfig
   ) {
-    if (predators.length === 0) return;
+    if (config.perceiveObstacle === false) return;
 
     let d: number,
       cnt: number = 0;
-    predators.forEach((pred) => {
-      d = bird.pos.distanceTo(pred.pos);
-      if (d <= config.birdPerceivedRadius) {
+    obstacles.forEach((obs) => {
+      d = bird.pos.distanceTo(obs.pos) - obs.radius;
+      if (d > 0 && d <= config.birdPerceivedRadius) {
         cnt++;
-        this.diff.subVectors(bird.pos, pred.pos).normalize().divideScalar(d);
+        this.diff.subVectors(bird.pos, obs.pos).normalize().divideScalar(d);
         this.value.add(this.diff);
       }
     });
@@ -40,9 +40,8 @@ export default class AvoidPredator extends Rule implements IAvoidPredator {
         .normalize()
         .multiplyScalar(config.birdMaxForce)
         .sub(bird.vel)
-        .multiplyScalar(2.5); // TODO this weight should be distance dependent
+        .multiplyScalar(config.birdSeparationWeight); // TODO this weight should be distance dependent
 
-      // bird.acc.copy(this.value);
       bird.acc.add(this.value);
     }
 

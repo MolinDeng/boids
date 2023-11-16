@@ -1,25 +1,51 @@
-import React, { useEffect, useMemo, useRef } from 'react';
-import {
-  ConeGeometry,
-  InstancedMesh,
-  MathUtils,
-  MeshStandardMaterial,
-  Object3D,
-} from 'three';
+import { useEffect, useMemo, useRef } from 'react';
+import { InstancedMesh, MathUtils, Mesh, Object3D, Vector3 } from 'three';
 import { Bird, IBird } from '@/models/Bird';
-import { useFrame } from '@react-three/fiber';
+import { MeshProps, useFrame } from '@react-three/fiber';
 import { useRenderConfig, useBirdConfig } from '@/hooks/useBoidsConfig';
 import { getAngleFromVector } from '@/lib/utils';
 import { IPredator, Predator } from '@/models/Predator';
 import { DEFAULT_SPEED } from '@/lib/constants';
+import { IObstacle, Obstacle } from '@/models/Obstacle';
+import { useDrag } from '@use-gesture/react';
+
+function ObstacleMesh({ obj }: { obj: Obstacle }) {
+  const ref = useRef<Mesh>(null!);
+  const bind = useDrag(({ offset: [x, y] }) => {
+    obj.pos.set(obj.initPos.x + x, obj.initPos.y - y, 0);
+    ref.current.position.set(obj.pos.x, obj.pos.y, 5);
+  });
+
+  return (
+    <mesh {...(bind() as MeshProps)} ref={ref} position={obj.initPos}>
+      <circleGeometry args={[obj.radius]} />
+      <meshStandardMaterial color="cornflowerblue" />
+    </mesh>
+  );
+}
 
 export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
   // shared dummy
   const dummy = useMemo(() => new Object3D(), []);
   const dummyPredator = useMemo(() => new Object3D(), []);
 
-  const { birdNum, birdMaxSpeed, setBirdRemain, predatorNum } = useBirdConfig();
+  const {
+    birdNum,
+    birdMaxSpeed,
+    setBirdRemain,
+    predatorNum,
+    perceiveObstacle,
+  } = useBirdConfig();
   const { memoRefresh } = useRenderConfig();
+
+  // create obstacles logic objects
+  const obstacles = useMemo(() => {
+    const obstacles: IObstacle[] = [];
+    obstacles.push(new Obstacle(new Vector3(500, 500, 0), 50));
+    obstacles.push(new Obstacle(new Vector3(800, 500, 0), 50));
+    return obstacles;
+  }, [memoRefresh]);
+
   // create boids logic objects
   const boids = useMemo(() => {
     const boids: IBird[] = [];
@@ -70,6 +96,7 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
           state.viewport,
           boids,
           predators,
+          obstacles,
           useBirdConfig.getState()
         );
         dummy.position.copy(bird.pos);
@@ -82,7 +109,13 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
 
       // update predators
       predators.forEach((predator, i) => {
-        predator.update(delta, state.viewport, boids, useBirdConfig.getState());
+        predator.update(
+          delta,
+          state.viewport,
+          boids,
+          obstacles,
+          useBirdConfig.getState()
+        );
         dummyPredator.position.copy(predator.pos);
         dummyPredator.rotation.z =
           getAngleFromVector(predator.vel) - Math.PI / 2;
@@ -105,6 +138,9 @@ export default function BoidsRenderer({ w, h }: { w: number; h: number }) {
         <coneGeometry args={[5, 14]} attach="geometry" />
         <meshBasicMaterial color="red" attach="material" />
       </instancedMesh>
+
+      {perceiveObstacle &&
+        obstacles.map((obj, i) => <ObstacleMesh key={i} obj={obj} />)}
     </>
   );
 }

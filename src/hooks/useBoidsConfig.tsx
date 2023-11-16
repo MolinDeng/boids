@@ -11,14 +11,6 @@ export const useRenderConfig = create<PauseState>((set) => ({
   flipMemoFresh: () => set((state) => ({ memoRefresh: !state.memoRefresh })),
 }));
 
-export const useObstacleConfig = create<{
-  active: boolean;
-  flipActive: () => void;
-}>((set) => ({
-  active: false,
-  flipActive: () => set((state) => ({ active: !state.active })),
-}));
-
 export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   birdNum: 500,
   birdPerceivedRadius: 50,
@@ -37,6 +29,8 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
   birdRemain: 0,
   // predator config
   predatorNum: 1,
+  // obstacle config
+  perceiveObstacle: false,
 
   setBirdNum: (n: number) => set(() => ({ birdNum: n })),
   setBirdPerceivedRadius: (n: number) =>
@@ -62,4 +56,7 @@ export const useBirdConfig = create<BirdConfig & BirdConfigActions>((set) => ({
 
   // predator config actions
   setPredatorNum: (n: number) => set(() => ({ predatorNum: n })),
+  // obstacle config actions
+  flipPerceiveObstacle: () =>
+    set((state) => ({ perceiveObstacle: !state.perceiveObstacle })),
 }));
