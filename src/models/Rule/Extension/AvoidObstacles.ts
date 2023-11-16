@@ -7,6 +7,8 @@ import { Vector3 } from 'three';
 
 interface IAvoidObstacles extends IRule {}
 
+type BirdOrPredator = IBird | IPredator;
+
 export default class AvoidObstacles extends Rule implements IAvoidObstacles {
   diff: Vector3;
 
@@ -16,7 +18,7 @@ export default class AvoidObstacles extends Rule implements IAvoidObstacles {
   }
 
   apply(
-    bird: IBird,
+    bird: BirdOrPredator,
     neighbors: IBird[],
     predators: IPredator[],
     obstacles: IObstacle[],

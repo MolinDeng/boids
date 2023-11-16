@@ -1,9 +1,11 @@
-import { MathUtils, Vector3 } from 'three';
+import { Vector3 } from 'three';
 import { IBird } from '../Bird';
 import { Size } from '@react-three/fiber';
 import { BirdConfig } from '@/types';
-import { DEFAULT_SPEED } from '@/lib/constants';
 import { IObstacle } from '@/models/Obstacle';
+import { IRule } from '../Rule';
+import AvoidObstacles from '../Rule/Extension/AvoidObstacles';
+import ChasePrey from '../Rule/Extension/ChasePrey';
 
 export interface IPredator {
   pos: Vector3; // position
@@ -24,12 +26,15 @@ export class Predator implements IPredator {
   vel: Vector3;
   acc: Vector3;
 
+  rules: IRule[];
+
   static axisZ: Vector3 = new Vector3(0, 0, 1);
 
   constructor() {
     this.pos = new Vector3(0, 0, 0);
     this.vel = new Vector3(0, 0, 0);
     this.acc = new Vector3(0, 0, 0);
+    this.rules = [new ChasePrey(), new AvoidObstacles()];
   }
 
   update(
@@ -42,24 +47,8 @@ export class Predator implements IPredator {
     // reset acceleration
     this.acc.set(0, 0, 0);
 
-    // find the most closest prey
-    const closestPrey = this.getClosestPrey(boids);
-    if (closestPrey) {
-      // just chase the prey
-      this.chase(closestPrey, config);
-    } else {
-      // wander around
-      this.vel.applyAxisAngle(
-        Predator.axisZ,
-        MathUtils.degToRad(MathUtils.randFloat(-15, 15))
-      );
-      this.vel
-        .normalize()
-        .multiplyScalar(
-          config.birdMaxSpeed === 0 ? DEFAULT_SPEED : config.birdMaxSpeed
-        );
-    }
-    // avoid obstacles
+    // apply rules
+    this.applyRules(boids, obstacles, config);
 
     // update velocity
     this.vel.add(this.acc.multiplyScalar(delta));
@@ -75,43 +64,11 @@ export class Predator implements IPredator {
     this.checkBoundaries(size);
   }
 
-  // chase the prey
-  chase(prey: IBird, config: BirdConfig): void {
-    this.acc
-      .copy(prey.pos)
-      .sub(this.pos)
-      .normalize()
-      .multiplyScalar(config.birdMaxForce)
-      .sub(this.vel)
-      .multiplyScalar(1.1); // TODO adjust through config
+  applyRules(preys: IBird[], obstacles: IObstacle[], config: BirdConfig) {
+    this.rules.forEach((rule) =>
+      rule.apply(this, preys, null, obstacles, config)
+    );
   }
-
-  // find the most closest prey
-  getClosestPrey(boids: IBird[]): IBird | undefined {
-    let closestPrey: IBird | undefined = undefined;
-    let closestDistance = Infinity;
-    let closestIndex = -1;
-    boids.forEach((boid, i) => {
-      const distance = this.pos.distanceTo(boid.pos);
-      if (distance < 200 && distance < closestDistance) {
-        // TODO 200 adjust through config
-        closestDistance = distance;
-        closestPrey = boid;
-        closestIndex = i;
-      }
-    });
-    if (closestDistance < 10) boids.splice(closestIndex, 1); // remove the prey from the boids array
-    return closestPrey;
-  }
-
-  // find the preys within the range
-  // getPreys(boids: IBird[]): IBird[] {
-  //   const preys = boids.filter((boid) => {
-  //     const distance = this.pos.distanceTo(boid.pos);
-  //     return distance < 60;
-  //   });
-  //   return preys;
-  // }
 
   // boundless world
   checkBoundaries(size: Size) {
