@@ -91,6 +91,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     * [x] Cohesion
     * [x] Separation
   * [x] Boundless or Bouce off edge
+  * [x] Speed limit
   * [x] Additional rules
     * [x] Direction noise
     * [x] Avoid Predator
