@@ -14,8 +14,9 @@
     <br />
     <a href="https://boids-gt1.vercel.app/">Live Demo</a>
     ·
-    <a href="https://typst.app/project/raPr6DOusWCrubeP9PTGQg">View Report</a>
-
+    <a href="https://github.com/MolinDeng/games201/assets/23055178/229aebd1-9d8d-4d44-b79c-dd147997b29f">Taichi Demo</a>
+    ·
+    <a href="https://github.com/MolinDeng/games201/blob/main/boids.py">Taichi Code</a>
   </p>
 </div>
 
