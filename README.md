@@ -12,7 +12,7 @@
     <br />
     <!-- <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a> -->
     <br />
-    <a href="https://boids-gt.vercel.app/">Live Demo</a>
+    <a href="https://boids-gt1.vercel.app/">Live Demo</a>
     ·
     <a href="https://typst.app/project/raPr6DOusWCrubeP9PTGQg">View Report</a>
 
@@ -22,7 +22,7 @@
 ## About The Project
 
 <p align="center">
-  <img src="https://boids-gt.vercel.app/demo.gif" alt="demo" width="500" height="auto">
+  <img src="https://boids-gt1.vercel.app/demo.gif" alt="demo" width="500" height="auto">
 </p>
 
 ### Built With
