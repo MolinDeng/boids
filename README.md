@@ -23,7 +23,8 @@
 ## About The Project
 
 <p align="center">
-  <img src="https://boids-gt1.vercel.app/demo.gif" alt="demo" width="500" height="auto">
+  <video width="500" height="auto" controls>
+    <source src="https://boids-gt1.vercel.app/Proj_Boids1.mp4" type="video/mp4">
 </p>
 
 ### Built With
